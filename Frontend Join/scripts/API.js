@@ -22,7 +22,7 @@ async function getFromDB(path="") {
  * @returns {Promise<void>}
  */
 async function postToDB(postData, path="") {
-    await fetch(BASE_URL + path + ".json", {
+    await fetch(BASE_URL + path, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -40,7 +40,7 @@ async function postToDB(postData, path="") {
  * @returns {Promise<void>}
  */
 async function putToDB(putData, path="") {
-    await fetch(BASE_URL + path + ".json", {
+    await fetch(BASE_URL + path, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -57,7 +57,7 @@ async function putToDB(putData, path="") {
  * @returns {Promise<void>}
  */
 async function deleteFromDB(path="") {
-    await fetch(BASE_URL + path + ".json", {
+    await fetch(BASE_URL + path, {
         method: "DELETE",
     }) 
 }

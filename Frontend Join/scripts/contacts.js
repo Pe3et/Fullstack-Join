@@ -7,10 +7,6 @@ function init() {
 
 /**
  * Loads the contact list from the database and renders it in the contact list content element.
- * 
- * @async
- * @function loadContactList
- * @returns {Promise<void>}
  */
 async function loadContactList() {
     const contactResults = await getFromDB("contacts");
@@ -31,10 +27,6 @@ async function loadContactList() {
  * Renders a contact in the contact list.
  * 
  * @param {Object} contact - The contact object to be rendered.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * 
- * @returns {void}
  */
 function renderContactInList(contact) {
     const contentRef = document.getElementById(contact.name[0]);
@@ -42,39 +34,9 @@ function renderContactInList(contact) {
 }
 
 /**
- * Returns the HTML template for a contact in the contact list.
- * 
- * @param {Object} contact - The contact object to be rendered.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * 
- * @returns {string} The HTML template for the contact.
- */
-function getContactListPersonsTemplate(contact) {
-    return `
-        <div class="personInContactList" data-contact-id="${contact.id}">
-            <p>${contact.name}</p>
-        </div>
-    `;
-}
-
-/**
- * Retrieves a contact object from the contacts array based on the provided contact element.
- * 
- * @param {HTMLElement} contactElement - The contact element containing the contact ID.
- * @returns {Object} The contact object associated with the provided contact element.
- */
-function getContactFromElement(contactElement) {
-    const contactId = contactElement.getAttribute('data-contact-id');
-    const contact = contactsArray.find(contact => contact.id === contactId);
-    return contact;
-}
-
-/**
  * Renders a letter section in the contact list.
  * 
  * @param {string} letter - The letter to be rendered.
- * @returns {void}
  */
 function renderLetterSection(letter) {
     const contentRef = document.getElementById("contactListContent");
@@ -106,7 +68,7 @@ function getContactsArray(contactResults) {
     contacts = [];
     Object.keys(contactResults).forEach(key => {
         contacts.push({
-            id: key,
+            id: contactResults[key].id,
             name: contactResults[key].name,
             email: contactResults[key].email,
             phone: contactResults[key].phone,
@@ -121,13 +83,6 @@ function getContactsArray(contactResults) {
  * Renders the contact details in the contact content element.
  * 
  * @param {Object} contact - The contact object to be rendered.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * @param {string} contact.email - The email of the contact.
- * @param {string} contact.phone - The phone number of the contact.
- * @param {string} contact.color - The color associated with the contact.
- * 
- * @returns {void}
  */
 function renderContactDetails(contact) {
     const contentRef = document.getElementById('contactContent');
@@ -145,10 +100,6 @@ function renderContactDetails(contact) {
  * Toggles the responsive contact content and list.
  * 
  * @param {Object} contact - The contact object associated with the toggle action.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * 
- * @returns {void}
  */
 function respContentToggle(contact) {
     const contactContainerRef = document.querySelector('.contactContainer');
@@ -161,10 +112,6 @@ function respContentToggle(contact) {
  * Swaps the responsive burger button based on the contact list visibility.
  * 
  * @param {Object} contact - The contact object associated with the swap action.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * 
- * @returns {void}
  */
 function swapRespBurgerButton(contact) {
     const buttonRef = document.querySelector('.respButton');
@@ -182,10 +129,6 @@ function swapRespBurgerButton(contact) {
  * Toggles the responsive contact context menu.
  * 
  * @param {Object} contact - The contact object associated with the toggle action.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * 
- * @returns {void}
  */
 function toggleRespContextMenu(contact) {
     const respContactOptionsRef = document.querySelector('.respContactOptions');
@@ -205,7 +148,6 @@ function toggleRespContextMenu(contact) {
  * Checks if a click event occurred outside the responsive contact context menu and toggles it if necessary.
  * 
  * @param {Event} event - The click event to be checked.
- * @returns {void}
  */
 function closeRespContextMenuCheck(event) {
     const respContactOptionsRef = document.querySelector('.respContactOptions');
@@ -220,11 +162,7 @@ function closeRespContextMenuCheck(event) {
  * 
  * @param {string} containerRefID - The ID of the overlay container element.
  * @param {string} cardRefId - The ID of the overlay card element.
- * @param {Object} [contact] - The contact object to be edited (optional).
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * 
- * @returns {void}
+ * @param {Object} contact - The contact object to be edited.
  */
 function openOverlay(containerRefID, cardRefId, contact) {
     document.getElementById(containerRefID).classList.add('overlayAppear');
@@ -238,8 +176,6 @@ function openOverlay(containerRefID, cardRefId, contact) {
  * 
  * @param {string} containerRefID - The ID of the overlay container element.
  * @param {string} cardRefId - The ID of the overlay card element.
- * 
- * @returns {void}
  */
 function closeOverlay(containerRefID, cardRefId) {
     document.getElementById(containerRefID).classList.remove('overlayBackgroundColor');
@@ -255,13 +191,6 @@ function closeOverlay(containerRefID, cardRefId) {
  * Loads the edit contact card with the provided contact information.
  * 
  * @param {Object} contact - The contact object to be loaded.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * @param {string} contact.email - The email of the contact.
- * @param {string} contact.phone - The phone number of the contact.
- * @param {string} contact.color - The color associated with the contact.
- * 
- * @returns {void}
  */
 function loadEditContactCard(contact) {
     document.getElementById('editContactInputName').value = contact.name;
@@ -279,9 +208,6 @@ function loadEditContactCard(contact) {
 
 /**
  * Resets the input fields for adding or editing a contact.
- * 
- * @function emptyInputFields
- * @returns {void}
  */
 function emptyInputFields() {
     document.getElementById('addContactInputName').value = "";
@@ -296,14 +222,7 @@ function emptyInputFields() {
 /**
  * Edits a contact by updating its name, email, and phone number in the database.
  * 
- * @async
- * @function editContact
  * @param {Object} contact - The contact object to be edited.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.id - The ID of the contact.
- * @param {string} contact.email - The email of the contact.
- * @param {string} contact.phone - The phone number of the contact.
- * @returns {Promise<void>}
  */
 async function editContact(contact) {
     let nameInput = document.getElementById('editContactInputName').value;
@@ -324,9 +243,6 @@ async function editContact(contact) {
 
 /**
  * Closes the edit overlay.
- * 
- * @function hardcloseEditOverlay
- * @returns {void}
  */
 function hardcloseEditOverlay() {
     document.getElementById('editOverlayContainer').classList.remove('overlayBackgroundColor');
@@ -336,10 +252,6 @@ function hardcloseEditOverlay() {
 
 /**
  * Adds a new contact to the database and updates the contact list.
- * 
- * @async
- * @function addContact
- * @returns {Promise<void>}
  */
 async function addContact() {
     let nameInput = document.getElementById('addContactInputName').value;
@@ -349,7 +261,7 @@ async function addContact() {
         nameInput = getUpperCaseName(nameInput);
         const randomColor = getRandomColor();
         const newContact = { name: nameInput, email: emailInput, phone: phoneInput, color: randomColor };
-        await postToDB(newContact, "contacts");
+        await postToDB(newContact, "contacts/");
         loadContactList();
         closeOverlay("addContactOverlayContainer", "addContactCardOverlay");
         contactCreatedSuccess();
@@ -359,13 +271,10 @@ async function addContact() {
 /**
  * Deletes a contact from the database and updates the contact list.
  * 
- * @async
- * @function deleteContact
  * @param {string} key - The ID of the contact to be deleted.
- * @returns {Promise<void>}
  */
 async function deleteContact(key) {
-    await deleteFromDB("contacts/" + key);
+    await deleteFromDB("contacts/" + key + "/");
     document.getElementById('contactContent').innerHTML = "";
     loadContactList();
     if (document.getElementById('editOverlayContainer').classList.contains("overlayAppear")) {
@@ -377,9 +286,6 @@ async function deleteContact(key) {
 
 /**
  * Handles the successful creation of a contact by removing the add contact overlay and animating a success message.
- * 
- * @function contactCreatedSuccess
- * @returns {void}
  */
 function contactCreatedSuccess() {
     const ref = document.getElementById('contactCreateSuccess');
@@ -393,9 +299,6 @@ function contactCreatedSuccess() {
 
 /**
  * Adds click event listeners to the contact list elements.
- * 
- * @function addClickListenersToContacts
- * @returns {void}
  */
 function addClickListenersToContacts() {
     const contactElements = document.querySelectorAll('.personInContactList');

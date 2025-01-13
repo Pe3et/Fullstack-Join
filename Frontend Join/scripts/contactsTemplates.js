@@ -17,9 +17,6 @@ function getContactListLetterSection(letter) {
  * Returns the HTML template for a contact list person.
  * 
  * @param {object} contactWithSpecificLetter - The contact object with a specific letter.
- * @param {string} contactWithSpecificLetter.name - The name of the contact.
- * @param {string} contactWithSpecificLetter.email - The email of the contact.
- * @param {string} contactWithSpecificLetter.color - The color of the contact.
  * @returns {string} The HTML template for the contact list person.
  */
 function getContactListPersonsTemplate(contactWithSpecificLetter) {
@@ -38,11 +35,6 @@ function getContactListPersonsTemplate(contactWithSpecificLetter) {
  * Returns the HTML template for a contact details section.
  * 
  * @param {object} contact - The contact object.
- * @param {number} contact.id - The ID of the contact.
- * @param {string} contact.name - The name of the contact.
- * @param {string} contact.email - The email of the contact.
- * @param {string} contact.phone - The phone number of the contact.
- * @param {string} contact.color - The color of the contact.
  * @returns {string} The HTML template for the contact details section.
  */
 function getContactDetailsTemplate(contact) {
