@@ -29,10 +29,10 @@ class Task(models.Model):
 
     title = models.CharField(max_length=30)
     description = models.TextField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORIES)
+    category = models.CharField(choices=CATEGORIES, max_length=14)
     dueDate = models.DateField()
-    prio = models.CharField(choices=PRIOS, default='medium')
-    status = models.CharField(choices=STATUS, default='toDo')
+    prio = models.CharField(choices=PRIOS, default='medium', max_length=6)
+    status = models.CharField(choices=STATUS, default='toDo', max_length=13)
     assignedContacts = models.ManyToManyField(Contact, related_name='tasks', blank=True)
 
 
@@ -42,6 +42,6 @@ class Subtask(models.Model):
         ('unchecked', 'unchecked')
     ]
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    text = models.CharField()
-    status = models.CharField(choices=STATUS)
+    text = models.CharField(max_length=200)
+    status = models.CharField(choices=STATUS, max_length=9)
 
