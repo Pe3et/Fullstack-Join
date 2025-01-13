@@ -1,0 +1,268 @@
+.overlayContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 100%;
+    z-Index: 998;
+}
+
+.contactCardOverlay {
+    width: 1212px;
+    height: 594px;
+    border-radius: 30px;
+    z-index: 999;
+    display: flex;
+    position: relative;
+    left: 100vw;
+    transition: all 300ms ease-out;
+    padding: 0 16px;
+}
+
+.overlayAppear {
+    transform: translateX(-100%);
+}
+
+.overlayBackgroundColor {
+    transition: background-color 300ms ease-out;
+    background-color: rgb(0, 0, 0, 0.3);
+}
+
+.slideInRight {
+    transform: translateX(-100vw);
+}
+
+.slideInBottom {
+    top: 50% !important;
+}
+
+.background {
+    background: rgba(42, 54, 71, 1);
+    height: 594px;
+    width: 40%;
+    padding: 66px 48px 66px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.background h2 {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 61px;
+    margin: 0;
+}
+
+.background p {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 27px;
+    margin: 0;
+}
+
+.backgroundText {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.addContactForm {
+    width: 60%;
+    background-color: white;
+}
+
+.backgroundLogo {
+    width: 55.6px;
+    height: 66px;
+}
+
+.addContactForm {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding: 48px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.xButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-bottom: 90px;
+}
+
+.xButton:hover {
+    cursor: pointer;
+    background-color: rgb(0, 0, 0, 0.069)
+}
+
+.profileImgAndForm {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 48px;
+}
+
+.imgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 69px;
+    font-family: "Inter", sans-serif;
+    font-size: 47px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.defaultProfileImg {
+    height: 120px;
+    width: 120px;
+}
+
+.inputArea {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputFields {
+    width: 380px;
+    border: none;
+    outline: none;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+::placeholder {
+    color: rgba(209, 209, 209, 1);
+}
+
+.inputContainer {
+    gap: 10px;
+    width: 422px;
+    border: solid 1px rgba(209, 209, 209, 1);
+    border-radius: 10px;
+    padding: 13px 21px 13px 21px;
+    display: flex;
+}
+
+.buttonArea {
+    display: flex;
+    gap: 24px;
+    padding-top: 8px;
+}
+
+.cancelButton {
+    width: 126px;
+    height: 50px;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    border: 1px solid rgba(9, 25, 49, 1);
+    background-color: white;
+    color: rgba(42, 54, 71, 1);
+}
+
+.cancelButton svg {
+    height: 14px;
+    width: 14px;
+}
+
+.cancelButton:hover path {
+    transition: all 100ms ease-in-out;
+    stroke: rgba(41, 171, 226, 1);
+}
+
+.cancelButton:hover {
+    transition: all 100ms ease-in-out;
+    cursor: pointer;
+    border-color: rgba(41, 171, 226, 1);
+    color: rgba(41, 171, 226, 1);
+    border-width: 2px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.createContactButton {
+    width: 214px;
+    height: 50px;
+    padding: 16px 0px 0px 0px;
+    gap: 4px;
+    border-radius: 10px;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    border-width: 1px;
+    background-color: rgba(42, 54, 71, 1);
+    color: white;
+}
+
+.createContactButton img {
+    width: 24px;
+    height: 24px;
+}
+
+.createContactButton:hover {
+    transition: all 100ms ease-in-out;
+    cursor: pointer;
+    background: rgba(41, 171, 226, 1);
+    border-color: rgba(41, 171, 226, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#contactCreateSuccess {
+    background: #2A3647;
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px 0px #00000026;
+    position: absolute;
+    padding: 20px;
+    bottom: 20svh;
+    left: 140%;
+    transition: all 300ms ease-out;
+    width: 310px;
+}
+
+@media (max-width: 1120px) {
+    .addContactForm {
+        padding-left: 16px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .overlayContainer {
+        top: 100%;
+    }
+}

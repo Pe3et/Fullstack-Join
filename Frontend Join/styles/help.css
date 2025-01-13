@@ -1,0 +1,140 @@
+main {
+  padding-left: 232px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  justify-content: space-between;
+  overflow-y: auto;
+  max-width: 1920px;
+}
+
+header {
+  z-index: 2;
+}
+
+h1 {
+  font-size: 61px;
+  font-weight: 700;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 0;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backButton {
+  position: static;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+}
+
+.menuLink {
+  font-size: 16px;
+  width: 100%;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.activeLink {
+  background-color: rgba(9, 25, 49, 1);
+}
+
+.backButton:hover {
+  cursor: pointer;
+  background-color: rgb(228, 228, 228);
+}
+
+h3 {
+  font-size: 27px;
+  font-weight: 700;
+}
+
+ul {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.content {
+  color: rgba(0, 0, 0, 1);
+  padding-top: 96px;
+  padding-left: 96px;
+  padding-right: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.pageContent {
+  display: flex;
+  height: 100svh;
+  max-width: 100%;
+  flex-direction: column;
+}
+
+@media (max-width: 1950px) {
+  .backButton {
+    left: 1440px;
+  }
+}
+
+@media (max-width: 1500px) {
+  .backButton {
+    left: 1000px;
+  }
+}
+
+@media (max-width: 1200px) {
+  main {
+    padding-left: 152px;
+  }
+}
+
+@media (max-width: 1050px) {
+  main {
+    padding-left: 0;
+  }
+
+  .content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .backButton {
+    left: 500px;
+    top: 200px;
+  }
+
+  h1 {
+    font-size: 47px;
+  }
+}
+
+@media (max-width: 550px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .backButton {
+    left: 280px;
+    top: 180px;
+  }
+}

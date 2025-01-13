@@ -1,0 +1,115 @@
+@media (max-width: 1200px) {
+  .menuButton {
+    padding: 8px 12px 8px 12px;
+  }
+
+  .links a {
+    padding-left: 8px;
+  }
+
+  .active {
+    padding: 8px 12px 8px 12px;
+  }
+
+  #sidebar {
+    width: 152px;
+  }
+
+  main {
+    padding-left: 152px;
+  }
+
+  .contactContainer {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 1050px) {
+  #sidebar {
+    display: none;
+  }
+
+  main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .project p {
+    display: none;
+  }
+
+  header {
+    padding-top: 20px;
+    padding-right: 16px;
+    padding-left: 16px;
+    padding-bottom: 20px;
+    z-index: 10;
+  }
+
+  .project img {
+    height: 56px;
+    width: 50px;
+  }
+
+  .help img {
+    display: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .userIcon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .project img {
+    height: 40px;
+    width: 32px;
+  }
+}
+
+@media (min-width: 650px) {
+  .footerMenu {
+    height: 100px;
+  }
+
+  .respMenuButton {
+    height: 86px;
+    width: 100px;
+  }
+
+  .respMenuButton img {
+    height: 30px;
+    width: 30px;
+  }
+
+  .respMenuButton span {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1051px) {
+  .footerMenu {
+    display: none;
+  }
+
+  .project img {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .respMenuButton img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .respMenuButton span {
+    font-size: 12px;
+  }
+
+  .respMenuButton {
+    height: 70px;
+    width: 80px;
+  }
+}

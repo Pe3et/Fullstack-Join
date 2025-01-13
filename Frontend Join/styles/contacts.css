@@ -1,0 +1,414 @@
+body {
+  background: #f6f7f8;
+  max-height: 100svh;
+  min-height: 100svh;
+}
+
+.pageContent {
+  min-height: 100svh;
+  max-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+main {
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  padding-left: 232px;
+  padding-right: 16px;
+}
+
+.contactList {
+  background: white;
+  min-width: 456px;
+  max-width: 456px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 56px;
+  box-shadow: 4px 0px 6px 0px #00000014;
+  overflow-y: auto;
+}
+
+.addContactButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#addContactButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2a3647;
+  color: white;
+  border-radius: 10px;
+  gap: 16px;
+  padding: 12px;
+  max-width: 352px;
+  font-size: 21px;
+  font-weight: 700;
+  margin: 22.5px 0;
+  flex: 1;
+}
+
+#addContactButton:hover {
+  cursor: pointer;
+  background: rgba(41, 171, 226, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  animation-timing-function: ease-in-out;
+  animation-duration: 100ms;
+}
+
+#addContactButton:active {
+  background: rgba(9, 25, 49, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#addContactButton img {
+  height: 32px;
+  width: 32px;
+}
+
+#contactListContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contactListLetter {
+  font-weight: 400;
+  font-size: 20px;
+  padding: 15px 24px;
+}
+
+.contactListSpacer {
+  background: #d1d1d1;
+  border-radius: 3px;
+  margin: 8px 0;
+  height: 1px;
+}
+
+.personInContactList {
+  display: flex;
+  flex: 1;
+  gap: 35px;
+  padding: 15px 24px;
+}
+
+.personInContactListIcon {
+  background-color: violet;
+  padding: 10px;
+  border-radius: 45px;
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  height: 42px;
+  width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.personInContactListData {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  word-break: break-word;
+}
+
+.personInContactListName {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.personInContactListMail {
+  color: #007cee;
+  text-decoration: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  background: transparent;
+  width: 10px;
+}
+
+::-webkit-scrollbar-button {
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url("../assets/img/scrollbar_button_up.svg");
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url("../assets/img/scrollbar_button_down.svg");
+}
+
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background-color: #c0c0c0;
+  height: 53px;
+}
+
+/* Contact Container */
+.contactContainer {
+  padding-left: 55px;
+  padding-top: 110px;
+  flex: 1;
+}
+
+.contactHeading {
+  display: flex;
+  height: 73px;
+  align-items: center;
+  gap: 30px;
+}
+
+.contactHeading h1 {
+  font-weight: 700;
+  font-size: 61px;
+}
+
+.contactHeadingSpacer {
+  background: #29abe2;
+  width: 3px;
+  height: 59px;
+  border-radius: 3px;
+}
+
+.contactHeading p {
+  font-weight: 400;
+  font-size: 27px;
+}
+
+/* Contact Details */
+#contactContent {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  position: relative;
+  left: 100vw;
+  transition: all 300ms ease-out;
+}
+
+.iconAndName {
+  display: flex;
+  gap: 54px;
+  align-items: center;
+  word-break: break-word;
+}
+
+.arrowIcon {
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
+  vertical-align: middle;
+  color: #29ABE2;
+  display: none;
+}
+
+.arrowIcon:hover {
+  cursor: pointer;
+}
+
+.contactDetailsIcon {
+  font-size: 47px;
+  font-weight: 500;
+  color: white;
+  width: 120px;
+  height: 120px;
+  border: 3px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 2px;
+  background-color: orange;
+  box-shadow: 0px 0px 4px 0px #0000001a;
+  flex-shrink: 0;
+}
+
+.contactDetailsIcon p {
+  font-size: 47px;
+}
+
+.contactDetailsName {
+  font-family: Inter;
+  font-size: 47px;
+  font-weight: 500;
+  line-height: 56.4px;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.contactDetailsOptions {
+  display: flex;
+  gap: 13px;
+  font-size: 16px;
+}
+
+.contactDetailsOption:hover, .respContactOptions div:hover {
+  font-weight: bold;
+  color: #29abe2;
+  cursor: pointer;
+}
+
+.contactDetailsOption:hover path, .respContactOptions div:hover path {
+  fill: #29abe2;
+}
+
+.contactDetailsNameAndOptions a {
+  display: flex;
+  font-family: Inter;
+  font-size: 16px;
+  text-align: left;
+}
+
+.contactInformation b {
+  gap: 15px;
+}
+
+.contactInformation {
+  margin-top: 80px;
+}
+
+.contactDetailsEmail {
+  color:#007cee;
+  word-break: break-word;
+}
+
+.contactDetailsOptions svg {
+  height: 24px;
+  width: 24px;
+}
+
+.contactDetailsOption {
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 19.2px;
+  text-align: left;
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  color: #2a3647;
+  width: 82px;
+}
+
+.contactInformation {
+  gap: 59px;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+.personInContactList:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 10px;
+}
+
+/* Styling für den aktiven Kontakt */
+.personInContactList.active {
+  background-color: #2a3647;
+  color: white;
+  padding: 20px;
+  height: auto;
+  border-radius: 10px;
+  transition: background-color 0.3s, padding 0.3s, height 0.3s;
+}
+
+.personInContactList.active .personInContactListMail {
+  color: #007cee;
+}
+
+.contactDetailsOption:hover svg {
+  fill: rgba(41, 171, 226, 1)
+}
+
+.contactSocials {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  word-wrap: break-word;
+}
+
+.personInContactList :hover {
+  cursor: pointer;
+}
+
+.hideContactList .contactList {
+  display: none;
+}
+
+.showContactList .contactContainer {
+  display: none;
+}
+
+.fab {
+  position: fixed;
+  bottom: 128px;
+  right: 32px;
+  z-index: 100;
+  display: none;
+  padding: 12px;
+}
+
+.respButton {
+  background-color: #2A3647;
+  color: white;
+  border: 1px;
+  border-radius: 56px;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.respButton:hover {
+  background-color: rgba(41, 171, 226, 1);
+}
+
+#contactContent, .contactHeading {
+  padding-left: 32px;
+}
+
+.arrowIcon {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+/* Validation adapation */
+.errorText {
+  font-family: 'Inter', sans-serif;
+}

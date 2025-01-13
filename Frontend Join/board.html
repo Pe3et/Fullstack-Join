@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./assets/fonts/Inter/inter.css" />
+  <link rel="stylesheet" href="./styles/mediaquerySidebarAndFooter.css" />
+  <link rel="stylesheet" href="./styles/board.css" />
+  <link rel="stylesheet" href="./styles/boardOverlay.css">
+  <link rel="stylesheet" href="./styles/addTaskForm.css">
+  <link rel="stylesheet" href="./styles/respBoard.css">
+  <link rel="stylesheet" href="./styles/addTaskForm.css">
+  <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
+  <script src="./scripts/firebaseAPI.js"></script>
+  <script src="./scripts/tasksTemplates.js"></script>
+  <script src="./scripts/tasks.js"></script>
+  <script src="./scripts/validation.js"></script>
+  <script src="./scripts/boardTemplates.js"></script>
+  <script src="./scripts/contacts.js"></script>
+  <script src="./scripts/drag-drop-touch.esm.js?autoload" type="module"></script>
+  <script src="./scripts/dragAndDrop.js"></script>
+  <script src="./scripts/board.js"></script>
+  <script src="./script.js"></script>
+  <title>Join - Board</title>
+</head>
+
+<body onload="initBoard()">
+  <div class="pageContent">
+    <header>
+      <div class="project">
+        <p>Kanban Project Managment Tool</p>
+        <img src="./assets/img/resp_header.svg" alt="" />
+      </div>
+      <div class="picture">
+        <a href="./help.html">
+          <div class="help">
+            <img src="./assets/img/help.png" alt="" />
+          </div>
+        </a>
+        <div class="userIcon">
+          <p></p>
+        </div>
+      </div>
+      <div id="headerDropdown" class="dnone">
+        <a href="./help.html">Help</a>
+        <a href="./legalNotice.html">Legal Notice</a>
+        <a href="./privacyPolicy.html">Privacy Policy</a>
+        <a href="./index.html" onclick="logOut()">Log out</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="headSection">
+        <h1>Board
+          <div class="respAddTaskButton">
+            <a href="./addTasks.html">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="10" fill="#2A3647" />
+                <path d="M20 10V30" stroke="white" stroke-width="2" stroke-linecap="round" />
+                <path d="M30 20L10.0005 20.138" stroke="white" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </a>
+          </div>
+        </h1>
+        <div class="searchAndAddTasksArea">
+          <div class="searchbar" id="searchbarContainer">
+            <input id="search" type="text" placeholder="Find Task" oninput="searchBoard(this)" />
+            <div class="searchButtonArea">
+              <div class="searchButtonSpacer"></div>
+              <div class="searchButton">
+                <img src="./assets/img/search.svg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div id="addTaskButton" onclick="openBoardOverlay(); renderOverlayAddTaskCard()">
+            <span>Add Task</span><img src="./assets/img/add.svg" alt="" />
+          </div>
+        </div>
+      </section>
+      <div class="scrollabeTaskContainerWrapper">
+        <section class="taskContainer">
+          <div class="columnWrapper">
+            <div class="tasksColumn">
+              <div class="taskState">
+                <p>To do</p>
+                <svg onclick="openBoardOverlay(); renderOverlayAddTaskCard()" id="toDoPlusButton" class="plusButton"
+                  width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1.5" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2" />
+                  <path d="M12 8.5V16.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                  <path d="M16 12.5754L8 12.5754" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div id="toDoContainer" class="taskList" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div id="toDoNoTasks" class="noTask">
+                  <span>No tasks to do</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columnWrapper">
+            <div class="tasksColumn">
+              <div class="taskState">
+                <p>In progress</p>
+                <svg onclick="openBoardOverlay(); renderOverlayAddTaskCard()" id="inProgressPlusButton"
+                  class="plusButton" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1.5" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2" />
+                  <path d="M12 8.5V16.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                  <path d="M16 12.5754L8 12.5754" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div id="inProgressContainer" class="taskList" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div id="inProgressNoTasks" class="noTask">
+                  <span>No tasks in progress</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columnWrapper">
+            <div class="tasksColumn">
+              <div class="taskState">
+                <p>Await feedback</p>
+                <svg onclick="openBoardOverlay(); renderOverlayAddTaskCard()" id="awaitFeedbackPlusButton"
+                  class="plusButton" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1.5" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2" />
+                  <path d="M12 8.5V16.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                  <path d="M16 12.5754L8 12.5754" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div id="awaitFeedbackContainer" class="taskList" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div id="awaitFeedbackNoTasks" class="noTask">
+                  <span>No tasks await feedback</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columnWrapper">
+            <div class="tasksColumn">
+              <div class="taskState">
+                <p>Done</p>
+              </div>
+              <div id="doneContainer" class="taskList" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div id="doneNoTasks" class="noTask">
+                  <span>No tasks done</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Overlay -->
+    <div id="boardOverlayContainer" class="overlayContainer" onclick="closeBoardOverlay()">
+      <section id="boardCardOverlay" class="boardCardOverlay" onclick="event.stopPropagation()">
+      </section>
+    </div>
+
+    <!-- Sidebar -->
+    <section id="sidebar">
+      <img class="sidebarLogo" src="./assets/img/Join logo vector.svg" alt="Join Logo" />
+      <div id="menu" class="menu">
+        <a id="summary" class="menuButton" href="./summary.html">
+          <img class="menuIcon" src="./assets/img/summary_icon.svg" alt="summary icon" />
+          <span>Summary</span>
+        </a>
+        <a id="addTask" class="menuButton" href="./addTasks.html">
+          <img class="menuIcon" src="./assets/img/add_task_icon.svg" alt="add_task_icon" />
+          <span>Add Task</span>
+        </a>
+        <a id="board" class="active" href="./board.html">
+          <img class="menuIcon" src="./assets/img/board_active.svg" alt="board_icon" />
+          <span>Board</span>
+        </a>
+        <a id="contacts" class="menuButton" href="./contacts.html">
+          <img class="menuIcon" src="./assets/img/contacts_icon.svg" alt="contacts_icon" />
+          <span>Contacts</span>
+        </a>
+      </div>
+      <div class="links">
+        <a class="linkButton" href="./privacyPolicy.html">Privacy Policy</a>
+        <a class="linkButton" href="./legalNotice.html">Legal notice</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <section class="footerMenu">
+        <a id="respSummary" class="respMenuButton" href="./summary.html">
+          <img class="menuIcon" src="./assets/img/summary_icon.svg" alt="summary icon" />
+          <span>Summary</span>
+        </a>
+        <a id="addTask" class="respMenuButton" href="./addTasks.html">
+          <img class="menuIcon" src="./assets/img/add_task_icon.svg" alt="add_task_icon" />
+          <span>Add Task</span>
+        </a>
+        <a id="board" class="respMenuButton respActive" href="./board.html">
+          <img class="menuIcon" src="./assets/img/board_active.svg" alt="board_icon" />
+          <span>Board</span>
+        </a>
+        <a id="contacts" class="respMenuButton" href="./contacts.html">
+          <img class="menuIcon" src="./assets/img/contacts_icon.svg" alt="contacts_icon" />
+          <span>Contacts</span>
+        </a>
+      </section>
+    </footer>
+  </div>
+</body>
+
+</html>

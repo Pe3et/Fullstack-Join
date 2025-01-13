@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join - Contacts</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./styles/contacts.css">
+  <link rel="stylesheet" href="./assets/fonts/Inter/inter.css">
+  <link rel="stylesheet" href="./styles/contactOverlays.css">
+  <link rel="stylesheet" href="./styles/mediaquerySidebarAndFooter.css">
+  <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="./styles/respContacts.css">
+  <script src="./scripts/firebaseAPI.js"></script>
+  <script src="./scripts/contacts.js"></script>
+  <script src="./scripts/contactsTemplates.js"></script>
+  <script src="./scripts/validation.js"></script>
+  <script src="./scripts/board.js"></script>
+  <script src="./script.js"></script>
+</head>
+
+<body onload="init()">
+  <div class="pageContent">
+    <header>
+      <div class="project">
+        <p>Kanban Project Managment Tool</p>
+        <img src="./assets/img/resp_header.svg" alt="" />
+      </div>
+      <div class="picture">
+        <a href="./help.html">
+          <div class="help">
+            <img src="./assets/img/help.png" alt="" />
+          </div>
+        </a>
+        <div class="userIcon">
+          <p></p>
+        </div>
+      </div>
+      <div id="headerDropdown" class="dnone">
+        <a href="./help.html">Help</a>
+        <a href="./legalNotice.html">Legal Notice</a>
+        <a href="./privacyPolicy.html">Privacy Policy</a>
+        <a href="./index.html" onclick="logOut()">Log out</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="contactList" id="globalContentList">
+        <div class="addContactButtonContainer">
+          <div onclick="openOverlay('addContactOverlayContainer', 'addContactCardOverlay')" id="addContactButton">
+            <b>Add new contact</b>
+            <img src="./assets/img/add_contact_icon.svg" alt="add new contact" />
+          </div>
+        </div>
+        <div id="contactListContent"></div>
+      </div>
+      <div class="contactContainer">
+        <div class="contactHeading">
+          <h1>Contacts</h1>
+          <div class="contactHeadingSpacer"></div>
+          <p>Better with a team</p>
+          <img src="./assets/img/pfeil.png" alt="Pfeil Icon" class="arrowIcon" onclick="respContentToggle()">
+        </div>
+        <div id="contactContent"></div>
+      </div>
+    </main>
+    <section id="sidebar">
+      <img class="sidebarLogo" src="./assets/img/Join logo vector.svg" alt="Join Logo" />
+      <div id="menu" class="menu">
+        <a id="summary" class="menuButton" href="./summary.html">
+          <img class="menuIcon" src="./assets/img/summary_icon.svg" alt="summary icon" />
+          <span>Summary</span>
+        </a>
+        <a id="addTask" class="menuButton" href="./addTasks.html">
+          <img class="menuIcon" src="./assets/img/add_task_icon.svg" alt="add_task_icon" />
+          <span>Add Task</span>
+        </a>
+        <a id="board" class="menuButton" href="./board.html">
+          <img class="menuIcon" src="./assets/img/board_icon.svg" alt="board_icon" />
+          <span>Board</span>
+        </a>
+        <a id="contacts" class="active" href="./contacts.html">
+          <img class="menuIcon" src="./assets/img/contacts_active.svg" alt="contacts_icon" />
+          <span>Contacts</span>
+        </a>
+      </div>
+      <div class="links">
+        <a class="linkButton" href="./privacyPolicy.html">Privacy Policy</a>
+        <a class="linkButton" href="./legalNotice.html">Legal notice</a>
+      </div>
+    </section>
+    <!-- Overlay -->
+    <div id="addContactOverlayContainer" class="overlayContainer">
+      <section id="addContactCardOverlay" class="contactCardOverlay">
+        <div class="background">
+          <div class="overlayCloseButton" onclick="closeOverlay('addContactOverlayContainer', 'addContactCardOverlay')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <img class="backgroundLogo" src="./assets/img/background_logo.svg" alt="" />
+          <div class="backgroundText">
+            <h2>Add contact</h2>
+            <p>Tasks are better with a Team!</p>
+          </div>
+        </div>
+        <div class="addContactForm">
+          <div class="xButton" onclick="closeOverlay('addContactOverlayContainer', 'addContactCardOverlay')">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <mask id="mask0_71720_5528" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="4" width="24"
+                height="24">
+                <rect x="4" y="4" width="24" height="24" fill="#D9D9D9" />
+              </mask>
+              <g mask="url(#mask0_71720_5528)">
+                <path
+                  d="M16 17.4L11.1 22.3C10.9167 22.4834 10.6834 22.575 10.4 22.575C10.1167 22.575 9.88338 22.4834 9.70005 22.3C9.51672 22.1167 9.42505 21.8834 9.42505 21.6C9.42505 21.3167 9.51672 21.0834 9.70005 20.9L14.6 16L9.70005 11.1C9.51672 10.9167 9.42505 10.6834 9.42505 10.4C9.42505 10.1167 9.51672 9.88338 9.70005 9.70005C9.88338 9.51672 10.1167 9.42505 10.4 9.42505C10.6834 9.42505 10.9167 9.51672 11.1 9.70005L16 14.6L20.9 9.70005C21.0834 9.51672 21.3167 9.42505 21.6 9.42505C21.8834 9.42505 22.1167 9.51672 22.3 9.70005C22.4834 9.88338 22.575 10.1167 22.575 10.4C22.575 10.6834 22.4834 10.9167 22.3 11.1L17.4 16L22.3 20.9C22.4834 21.0834 22.575 21.3167 22.575 21.6C22.575 21.8834 22.4834 22.1167 22.3 22.3C22.1167 22.4834 21.8834 22.575 21.6 22.575C21.3167 22.575 21.0834 22.4834 20.9 22.3L16 17.4Z"
+                  fill="#2A3647" />
+              </g>
+            </svg>
+          </div>
+          <div class="profileImgAndForm">
+            <div class="imgContainer">
+              <img class="defaultProfileImg" src="./assets/img/default_profile_img.svg" alt="">
+            </div>
+            <div class="addContactFormContainer">
+              <div class="inputArea">
+                <div class="inputContainer">
+                  <input class="inputFields" type="text" name="name" id="addContactInputName" placeholder="Name">
+                  <img src="./assets/img/person.svg" alt="Person Icon">
+                </div>
+                <div class="inputContainer">
+                  <input class="inputFields" type="email" name="email" id="addContactInputEmail" placeholder="Email">
+                  <img src="./assets/img/mail.svg" alt="Mail Icon">
+                </div>
+                <div class="inputContainer">
+                  <input class="inputFields" type="number" name="phone" id="addContactInputPhone" placeholder="Phone">
+                  <img src="./assets/img/call.svg" alt="Phone Icon">
+                </div>
+                </form>
+                <div class="buttonArea">
+                  <div class="cancelButton"
+                    onclick="closeOverlay('addContactOverlayContainer', 'addContactCardOverlay')">Cancel
+                    <svg width="24" height="24" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M7.001 6.50008L12.244 11.7431M1.758 11.7431L7.001 6.50008L1.758 11.7431ZM12.244 1.25708L7 6.50008L12.244 1.25708ZM7 6.50008L1.758 1.25708L7 6.50008Z"
+                        stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                  <button class="createContactButton" onclick="addContact()" type="submit" form="addContactForm">Create
+                    contact <img src="./assets/img/check.svg" alt=""></button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+    </div>
+    <div id="editOverlayContainer" class="overlayContainer">
+      <section id="editContactCardOverlay" class="contactCardOverlay">
+        <div class="background">
+          <div class="overlayCloseButton" onclick="closeOverlay('editOverlayContainer', 'editContactCardOverlay')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <img class="backgroundLogo" src="./assets/img/background_logo.svg" alt="" />
+          <div class="backgroundText">
+            <h2>Edit contact</h2>
+          </div>
+        </div>
+        <div class="addContactForm">
+          <div class="xButton" onclick="closeOverlay('editOverlayContainer', 'editContactCardOverlay')">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <mask id="mask0_71720_5528" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="4" width="24"
+                height="24">
+                <rect x="4" y="4" width="24" height="24" fill="#D9D9D9" />
+              </mask>
+              <g mask="url(#mask0_71720_5528)">
+                <path
+                  d="M16 17.4L11.1 22.3C10.9167 22.4834 10.6834 22.575 10.4 22.575C10.1167 22.575 9.88338 22.4834 9.70005 22.3C9.51672 22.1167 9.42505 21.8834 9.42505 21.6C9.42505 21.3167 9.51672 21.0834 9.70005 20.9L14.6 16L9.70005 11.1C9.51672 10.9167 9.42505 10.6834 9.42505 10.4C9.42505 10.1167 9.51672 9.88338 9.70005 9.70005C9.88338 9.51672 10.1167 9.42505 10.4 9.42505C10.6834 9.42505 10.9167 9.51672 11.1 9.70005L16 14.6L20.9 9.70005C21.0834 9.51672 21.3167 9.42505 21.6 9.42505C21.8834 9.42505 22.1167 9.51672 22.3 9.70005C22.4834 9.88338 22.575 10.1167 22.575 10.4C22.575 10.6834 22.4834 10.9167 22.3 11.1L17.4 16L22.3 20.9C22.4834 21.0834 22.575 21.3167 22.575 21.6C22.575 21.8834 22.4834 22.1167 22.3 22.3C22.1167 22.4834 21.8834 22.575 21.6 22.575C21.3167 22.575 21.0834 22.4834 20.9 22.3L16 17.4Z"
+                  fill="#2A3647" />
+              </g>
+            </svg>
+          </div>
+          <div class="profileImgAndForm">
+            <div class="imgContainer" id="editCardProfileIcon">
+              <img class="defaultProfileImg" src="./assets/img/default_profile_img.svg" alt="">
+            </div>
+            <div class="inputArea">
+              <div class="inputContainer">
+                <input class="inputFields" type="text" name="name" id="editContactInputName" placeholder="Name">
+                <img src="./assets/img/person.svg" alt="Person Icon">
+              </div>
+              <div class="inputContainer">
+                <input class="inputFields" type="text" name="email" id="editContactInputEmail" placeholder="Email">
+                <img src="./assets/img/mail.svg" alt="Mail Icon">
+              </div>
+              <div class="inputContainer">
+                <input class="inputFields" type="number" name="phone" id="editContactInputPhone" placeholder="Phone">
+                <img src="./assets/img/call.svg" alt="Phone Icon">
+              </div>
+              <div class="buttonArea">
+                <div class="cancelButton" id="deleteContactOverlayButton" onclick="deleteContact()">Delete
+                  <svg width="24" height="24" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M7.001 6.50008L12.244 11.7431M1.758 11.7431L7.001 6.50008L1.758 11.7431ZM12.244 1.25708L7 6.50008L12.244 1.25708ZM7 6.50008L1.758 1.25708L7 6.50008Z"
+                      stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <button class="createContactButton" id="editContactButton" onclick="editContact()">Save <img
+                    src="./assets/img/check.svg" alt=""></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="contactCreateSuccess">
+      <p>Contact successfully created</p>
+    </div>
+    <footer>
+      <section class="footerMenu">
+        <a id="respSummary" class="respMenuButton" href="./summary.html">
+          <img class="menuIcon" src="./assets/img/summary_icon.svg" alt="summary icon" />
+          <span>Summary</span>
+        </a>
+        <a id="addTask" class="respMenuButton" href="./addTasks.html">
+          <img class="menuIcon" src="./assets/img/add_task_icon.svg" alt="add_task_icon" />
+          <span>Add Task</span>
+        </a>
+        <a id="board" class="respMenuButton" href="./board.html">
+          <img class="menuIcon" src="./assets/img/board_icon.svg" alt="board_icon" />
+          <span>Board</span>
+        </a>
+        <a id="contacts" class="respMenuButton respActive" href="./contacts.html">
+          <img class="menuIcon" src="./assets/img/contacts_active.svg" alt="contacts_icon" />
+          <span>Contacts</span>
+        </a>
+      </section>
+    </footer>
+  </div>
+  <div class="fab">
+    <button class="respButton" onclick="openOverlay('addContactOverlayContainer', 'addContactCardOverlay')">
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M24.3291 13.6667C24.0132 13.6667 23.7497 13.5602 23.5386 13.3473C23.3275 13.1343
+        23.2219 12.8704 23.2219 12.5556V9.44448H20.1108C19.796 9.44448 19.5321 9.33763 19.3191
+        9.12392C19.1062 8.9102 18.9997 8.64539 18.9997 8.32948C18.9997 8.01357 19.1062 7.75006
+        19.3191 7.53895C19.5321 7.32784 19.796 7.22228 20.1108 7.22228H23.2219V4.11115C23.2219 3.79635 23.3288 3.53246 23.5425 3.31948C23.7562 3.10653 24.021 3.00005 24.3369 3.00005C24.6528 3.00005 24.9163 3.10653 25.1274 3.31948C25.3386 3.53246 25.4441 3.79635 25.4441 4.11115V7.22228H28.5552C28.87 7.22228 29.1339 7.32914 29.3469 7.54285C29.5599 7.75656 29.6663 8.02137 29.6663 8.33728C29.6663 8.65319 29.5599 8.91671 29.3469 9.12782C29.1339 9.33893 28.87 9.44448 28.5552 9.44448H25.4441V12.5556C25.4441 12.8704 25.3373 13.1343 25.1235 13.3473C24.9098 13.5602 24.645 13.6667 24.3291 13.6667ZM10.9997 10.9778C9.53301 10.9778 8.31449 10.4926 7.34411 9.52228C6.37375 8.5519 5.88858 7.33338 5.88858 5.86672C5.88858 4.40005 6.37375 3.18154 7.34411 2.21118C8.31449 1.2408 9.53301 0.755615 10.9997 0.755615C12.4663 0.755615 13.6849 1.2408 14.6552 2.21118C15.6256 3.18154 16.1108 4.40005 16.1108 5.86672C16.1108 7.33338 15.6256 8.5519 14.6552 9.52228C13.6849 10.4926 12.4663 10.9778 10.9997 10.9778ZM1.44411 21.6667C1.12931 21.6667 0.865419 21.5602 0.652441 21.3473C0.439486 21.1343 0.333008 20.8704 0.333008 20.5556V18.3334C0.333008 17.563 0.531152 16.8612 0.927441 16.2279C1.32375 15.5945 1.86635 15.1186 2.55524 14.8C4.12562 14.0815 5.57998 13.5649 6.91831 13.25C8.25666 12.9352 9.61592 12.7779 10.9961 12.7779C12.3763 12.7779 13.7367 12.9352 15.0774 13.25C16.4182 13.5649 17.8663 14.0815 19.4219 14.8C20.1108 15.1334 20.6571 15.613 21.0608 16.2389C21.4645 16.8649 21.6663 17.563 21.6663 18.3334V20.5556C21.6663 20.8704 21.5599 21.1343 21.3469 21.3473C21.1339 21.5602 20.87 21.6667 20.5552 21.6667H1.44411ZM2.55521 19.4445H19.4441V18.3334C19.4441 18.0149 19.3645 17.7149 19.2052 17.4334C19.046 17.1519 18.8071 16.9408 18.4886 16.8C17.0515 16.0963 15.7626 15.6204 14.6219 15.3723C13.4812 15.1241 12.2737 15 10.9997 15C9.72561 15 8.5182 15.1278 7.37744 15.3834C6.23671 15.6389 4.94042 16.1112 3.48857 16.8C3.19966 16.9408 2.97187 17.1519 2.80521 17.4334C2.63854 17.7149 2.55521 18.0149 2.55521 18.3334V19.4445ZM10.9997 8.75562C11.8219 8.75562 12.5089 8.47969 13.0608 7.92785C13.6126 7.37598 13.8886 6.68894 13.8886 5.86672C13.8886 5.04449 13.6126 4.35746 13.0608 3.80562C12.5089 3.25375 11.8219 2.97782 10.9997 2.97782C10.1775 2.97782 9.49042 3.25375 8.93857 3.80562C8.38671 4.35746 8.11077 5.04449 8.11077 5.86672C8.11077 6.68894 8.38671 7.37598 8.93857 7.92785C9.49042 8.47969 10.1775 8.75562 10.9997 8.75562Z"
+          fill="white" />
+      </svg>
+    </button>
+    <div class="respContactOptions respContactOptionsSlideIn">
+      <div id="respEditButton">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <mask id="mask0_246673_4064" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
+            height="24">
+            <rect width="24" height="24" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_246673_4064)">
+            <path
+              d="M5 19H6.4L15.025 10.375L13.625 8.975L5 17.6V19ZM19.3 8.925L15.05 4.725L16.45 3.325C16.8333 2.94167 17.3042 2.75 17.8625 2.75C18.4208 2.75 18.8917 2.94167 19.275 3.325L20.675 4.725C21.0583 5.10833 21.2583 5.57083 21.275 6.1125C21.2917 6.65417 21.1083 7.11667 20.725 7.5L19.3 8.925ZM17.85 10.4L7.25 21H3V16.75L13.6 6.15L17.85 10.4Z"
+              fill="#2A3647" />
+          </g>
+        </svg>
+        <p>Edit</p>
+      </div>
+      <div id="respDeleteButton">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <mask id="mask0_246673_4069" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25"
+            height="24">
+            <rect x="0.5" width="24" height="24" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_246673_4069)">
+            <path
+              d="M7.5 21C6.95 21 6.47917 20.8042 6.0875 20.4125C5.69583 20.0208 5.5 19.55 5.5 19V6C5.21667 6 4.97917 5.90417 4.7875 5.7125C4.59583 5.52083 4.5 5.28333 4.5 5C4.5 4.71667 4.59583 4.47917 4.7875 4.2875C4.97917 4.09583 5.21667 4 5.5 4H9.5C9.5 3.71667 9.59583 3.47917 9.7875 3.2875C9.97917 3.09583 10.2167 3 10.5 3H14.5C14.7833 3 15.0208 3.09583 15.2125 3.2875C15.4042 3.47917 15.5 3.71667 15.5 4H19.5C19.7833 4 20.0208 4.09583 20.2125 4.2875C20.4042 4.47917 20.5 4.71667 20.5 5C20.5 5.28333 20.4042 5.52083 20.2125 5.7125C20.0208 5.90417 19.7833 6 19.5 6V19C19.5 19.55 19.3042 20.0208 18.9125 20.4125C18.5208 20.8042 18.05 21 17.5 21H7.5ZM7.5 6V19H17.5V6H7.5ZM9.5 16C9.5 16.2833 9.59583 16.5208 9.7875 16.7125C9.97917 16.9042 10.2167 17 10.5 17C10.7833 17 11.0208 16.9042 11.2125 16.7125C11.4042 16.5208 11.5 16.2833 11.5 16V9C11.5 8.71667 11.4042 8.47917 11.2125 8.2875C11.0208 8.09583 10.7833 8 10.5 8C10.2167 8 9.97917 8.09583 9.7875 8.2875C9.59583 8.47917 9.5 8.71667 9.5 9V16ZM13.5 16C13.5 16.2833 13.5958 16.5208 13.7875 16.7125C13.9792 16.9042 14.2167 17 14.5 17C14.7833 17 15.0208 16.9042 15.2125 16.7125C15.4042 16.5208 15.5 16.2833 15.5 16V9C15.5 8.71667 15.4042 8.47917 15.2125 8.2875C15.0208 8.09583 14.7833 8 14.5 8C14.2167 8 13.9792 8.09583 13.7875 8.2875C13.5958 8.47917 13.5 8.71667 13.5 9V16Z"
+              fill="#2A3647" />
+          </g>
+        </svg>
+        <p >Delete</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

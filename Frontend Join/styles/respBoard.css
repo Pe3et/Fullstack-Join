@@ -1,0 +1,127 @@
+@media (max-width: 1439px) {
+    .taskState {
+        position: sticky;
+        left: 0;
+        padding-top: 16px;
+        padding-right: 32px;
+    }
+
+    .taskContainer {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    .taskList {
+        flex-direction: row !important;
+        min-width: fit-content !important;
+        width: 100% !important;
+        justify-content: start;
+        z-index: 1;
+        padding-right: 10px;
+        overflow-y: hidden;
+    }
+
+    .tasksColumn {
+        width: 78svw;
+        overflow-x: auto;
+        padding-right: 8px;
+    }
+
+    .boardTask {
+        width: auto;
+        max-width: 256px;
+        height: 215px;
+        justify-content: space-around;
+    }
+
+    .shortDescription {
+        max-height: 40px;
+    }
+}
+
+@media(max-width: 1333px) {
+    .headSection {
+        width: 100%;
+        padding-right: 64px;
+    }
+}
+
+@media(max-width: 1200px) {
+    main {
+        padding-left: 152px;
+    }
+}
+
+
+@media(max-width: 1050px) {
+    .pageContent {
+        overflow-y: visible !important;
+        height: 160svh;
+    }
+
+    main {
+        padding-left: 0;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .scrollabeTaskContainerWrapper {
+        flex: 1;
+        max-height: none !important;
+        padding-left: 0 !important;
+        overflow-y: hidden !important;
+        padding-left: 16px;
+        min-height: fit-content;
+    }
+
+    .taskContainer {
+        overflow-y: visible !important;
+    }
+
+    .headSection h1 {
+        display: flex;
+        justify-content: space-between;
+        flex: 1;
+        width: 100%;
+    }
+
+    .headSection {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .searchbar {
+        width: 256px !important;
+    }
+
+    .respAddTaskButton {
+        display: flex;
+    }
+
+    #addTaskButton {
+        display: none;
+    }
+
+    #search {
+        width: 180px;
+    }
+
+    .taskContainer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .tasksColumn {
+        width: 95svw;
+        padding-right: 16px;
+    }
+}
+
+@media(max-width: 415px) {
+    #editTaskContainer .prioContainer {
+        flex-direction: column;
+    }
+}

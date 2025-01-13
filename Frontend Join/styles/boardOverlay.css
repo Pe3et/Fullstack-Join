@@ -1,0 +1,369 @@
+.overlayContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  z-Index: 998;
+  left: 100vw;
+}
+
+.overlayBackgroundColor {
+  transition: background-color 300ms ease-out;
+  background-color: rgb(0, 0, 0, 0.3);
+}
+
+.slideInRight {
+  transform: translateX(-100vw);
+}
+
+.boardCardOverlay {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 525px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 30px;
+  padding: 48px 40px 48px 40px;
+  gap: 24px;
+  box-shadow: rgba(0, 0, 0, 0.16);
+  position: relative;
+  left: 100vw;
+  transition: transform 200ms ease-out;
+  font-family: 'Inter', sans-serif;
+  max-height: 90%;
+}
+
+@media(max-width: 560px) {
+  .boardCardOverlay {
+    width: 90% !important;
+  }
+   
+  .boardCardOverlay h3 {
+    font-size: 36px !important;
+  }
+
+  .boardCardOverlay p {
+    font-size: 16px !important;
+  }
+
+  .addTaskColumn {
+    width: 74svw !important;
+  }
+}
+
+@media(max-width: 1110px) {
+  .spacer{
+    margin: 0 32px !important;
+  }
+
+  .addTaskForm {
+    margin: 0;
+  }
+
+  .buttonContainer {
+    padding-right: 32px;
+  }
+
+  .boardCardOverlay {
+    padding: 24px;
+  }
+}
+
+@media(max-width: 400px) {
+  .boardCardOverlay {
+    padding: 12px;
+  }
+}
+
+.overlayTaskCategory {
+  padding: 4px 24px 4px 24px;
+  background-color: rgba(0, 56, 255, 1);
+  border-radius: 8px;
+}
+
+.overlayTaskCategory p {
+  color: white;
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.overlayCategoryAndCloseButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.overlayCloseButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.overlayCloseButton:hover {
+  cursor: pointer;
+  background-color: rgb(0, 0, 0, 0.069);
+}
+
+.overlayTaskTitle h3 {
+  font-size: 36px;
+  font-weight: 700;
+  max-width: 445px;
+  max-height: 96px;
+  overflow: auto;
+  word-wrap: break-word;
+}
+
+.overlayTaskDescription {
+  max-width: 100%;
+  overflow: auto;
+  word-wrap: break-word;
+}
+
+.overlayTaskDescription p {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+}
+
+.overlayDueDateArea {
+  align-items: center;
+  display: flex;
+  gap: 25px;
+}
+
+.overlayDueDateText {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(42, 54, 71, 1);
+}
+
+.overlayDueDate {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+}
+
+.overlayPrioArea {
+  align-items: center;
+  display: flex;
+  gap: 25px;
+}
+
+.overlayPrioText {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(42, 54, 71, 1);
+}
+
+.overlayPrio {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.overlayPrio div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assignedToArea p {
+  color: rgba(42, 54, 71, 1);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.assignedToArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.assignedContacts {
+  display: flex;
+  flex-direction: column;
+  padding: 7px 16px 7px 16px;
+  gap: 8px;
+  margin-top: 4px;
+  overflow: auto;
+  max-height: 120px;
+  width: 100%;
+}
+
+.singleAssignedContact {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.singleAssignedContact span {
+  font-size: 19px;
+}
+
+.overlaySubtasksArea p{
+  color: rgba(42, 54, 71, 1);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.overlaySubtasksArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.overlaySubtasks {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 16px 6px 16px;
+  gap: 4px;
+  margin-top: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+.singleSubtask {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  height: fit-content;
+  max-width: 404px;
+}
+
+.singleSubtask p{
+  max-width: 95%;
+  height: fit-content;
+  flex: 1;
+  word-wrap: break-word;
+}
+
+.subtaskCheckbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtaskCheckbox:hover {
+  cursor: pointer;
+}
+
+.overlayTaskButtonContainer {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  justify-content: end;
+  align-items: center;
+  color: #2A3647;
+  height: 24px;
+}
+
+.overlayTaskButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 76px;
+}
+
+.overlayTaskButton:hover {
+  font-weight: bold;
+  color: #29abe2;
+  cursor: pointer;
+}
+
+.overlayTaskButton:hover path {
+  fill: #29abe2;
+}
+
+.overlayTaskButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.overlayTaskButtonSpacer {
+  width: 1px;
+  height: 100%;
+  background: #D1D1D1;
+}
+
+/* Add Task - Overlay */
+.addTaskContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  justify-content: space-between;
+}
+
+.addTaskContainer h1 {
+  font-size: 61px;
+  font-weight: 700;
+  display: flex;
+  align-items: start;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+}
+
+/* Edit Task - Overlay */
+#editTaskContainer {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#editTaskContainer .addTaskForm {
+  flex-direction: column;
+  align-self: center;
+  overflow-y: auto;
+  padding: 0 4px;
+}
+
+#editTaskContainer #requiredInfo {
+  display: none;
+}
+
+#editTaskContainer #requiredInfoResp {
+  display: block;
+}
+
+#editTaskContainer #subtaskListContainer {
+  height: auto;
+  margin-bottom: 8px;
+}
+
+#editTaskContainer .dropdown {
+  position: relative;
+  top: -7px !important;
+}
+
+#editTaskContainer #categoryDropdownButton {
+  margin-bottom: 0;
+}
+
+#editTaskContainer .addTaskColumn {
+  padding-top: 8px;
+}
+
+#editTaskContainer .buttonContainer {
+  margin-top: 8px;
+}
+
+.editTaskOverlayCloseButtonContainer {
+  display: flex;
+  width: 100%;
+  justify-content: end;
+}
