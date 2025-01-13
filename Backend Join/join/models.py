@@ -41,7 +41,7 @@ class Subtask(models.Model):
         ('checked', 'checked'),
         ('unchecked', 'unchecked')
     ]
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='subtasks')
     text = models.CharField(max_length=200)
     status = models.CharField(choices=STATUS, max_length=9)
 
