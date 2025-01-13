@@ -1,20 +1,20 @@
-const BASE_URL = "YOUR FIREBASE URL";
+const BASE_URL = "http://127.0.0.1:8000/";
 
 /**
- * Retrieves data from the Firebase Realtime Database.
+ * Retrieves data from the Database.
  * 
  * @async
  * @param {string} [path=""] - The path to the data in the database.
  * @returns {Promise<object>} The data retrieved from the database.
  */
 async function getFromDB(path="") {
-    const fetchdata = await fetch(BASE_URL + path + ".json");
+    const fetchdata = await fetch(BASE_URL + path);
     const result = await fetchdata.json();
     return result
 }
 
 /**
- * Posts data to the Firebase Realtime Database.
+ * Posts data to the Database.
  * 
  * @async
  * @param {object} postData - The data to be posted to the database.
@@ -32,7 +32,7 @@ async function postToDB(postData, path="") {
 }
 
 /**
- * Updates data in the Firebase Realtime Database.
+ * Updates data in the  Database.
  * 
  * @async
  * @param {object} putData - The data to be updated in the database.
@@ -50,7 +50,7 @@ async function putToDB(putData, path="") {
 }
 
 /**
- * Deletes data from the Firebase Realtime Database.
+ * Deletes data from the Database.
  * 
  * @async
  * @param {string} [path=""] - The path to the data in the database.

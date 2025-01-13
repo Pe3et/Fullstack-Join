@@ -20,14 +20,4 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = [
-            'id',
-            'title',
-            'description',
-            'category',
-            'status',
-            'prio',
-            'dueDate',
-            'assignedContacts',
-            'subtasks'
-        ]
+        fields = '__all__'
