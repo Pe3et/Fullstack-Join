@@ -228,11 +228,13 @@ async function editContact(contact) {
     let nameInput = document.getElementById('editContactInputName').value;
     const emailInput = document.getElementById('editContactInputEmail').value;
     const phoneInput = document.getElementById('editContactInputPhone').value;
+    console.log(contact);
     if (validateAddContact('editContactInputName', 'editContactInputEmail')) {
         nameInput = getUpperCaseName(nameInput);
-        await putToDB(nameInput, ("contacts/" + contact.id + "/name"));
-        await putToDB(emailInput, ("contacts/" + contact.id + "/email"));
-        await putToDB(phoneInput, ("contacts/" + contact.id + "/phone"));
+        contact.name = nameInput
+        contact.email = emailInput;
+        contact.phone = phoneInput;
+        await putToDB(contact, ("contacts/" + contact.id + "/"));
         await loadContactList();
         document.querySelector('.contactDetailsName').innerText = nameInput;
         document.querySelector('.contactDetailsEmail').innerText = emailInput;
