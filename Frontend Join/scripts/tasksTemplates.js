@@ -6,7 +6,7 @@
  */
 function getContactDropdownTemplate(contact) {
     return `
-        <div class="dropdownContent" id="${contact.id}" onclick='assignContact(${JSON.stringify(contact)})'>
+        <div class="dropdownContent" id="contact${contact.id}" onclick='assignContact(${JSON.stringify(contact)})'>
             <div class="dropdownContactIconAndName">
               <div class="contactIcon" style='background: ${contact.color}'><p>${contact.name[0]}${contact.name.split(" ")[1][0]}</p></div>
               <p>${contact.name}</p>

@@ -73,8 +73,8 @@ function closeDropdownCheck(clickedElement, dropdownID) {
  * @param {Object} contact - The contact to be assigned.
  */
 function assignContact(contact) {
-    const idElement = document.getElementById(contact.id);
-    const svgElement = document.querySelector(`#${contact.id} svg`);
+    const idElement = document.getElementById('contact' + contact.id);
+    const svgElement = document.querySelector(`#contact${contact.id} svg`);
     idElement.classList.toggle("activeDropdownContact");
     if(idElement.classList.contains("activeDropdownContact")){
         svgElement.innerHTML = getCheckboxSVG("checked");  
@@ -219,7 +219,7 @@ async function createTask() {
         newTask.title = document.getElementById("titleInput").value;
         newTask.description = document.getElementById("descriptionInput").value;
         newTask.dueDate = document.getElementById("dateInput").value;
-        await postToDB(newTask,"tasks");
+        await postToDB(newTask,"tasks/");
         taskCreatedSuccess();
     }
 }
