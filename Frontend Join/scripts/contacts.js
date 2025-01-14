@@ -228,7 +228,6 @@ async function editContact(contact) {
     let nameInput = document.getElementById('editContactInputName').value;
     const emailInput = document.getElementById('editContactInputEmail').value;
     const phoneInput = document.getElementById('editContactInputPhone').value;
-    console.log(contact);
     if (validateAddContact('editContactInputName', 'editContactInputEmail')) {
         nameInput = getUpperCaseName(nameInput);
         contact.name = nameInput
