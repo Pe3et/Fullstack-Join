@@ -12,7 +12,7 @@ async function loadContactList() {
     const contactResults = await getFromDB("contacts");
     document.getElementById("contactListContent").innerHTML = "";
     if(contactResults) {
-        contactsArray = getContactsArray(contactResults);
+        contactsArray = sortContactsArray(contactResults);
         firstLettersArray = getFirstLettersArray(contactsArray);
         firstLettersArray.forEach(letter => {
             renderLetterSection(letter);
@@ -59,22 +59,12 @@ function getFirstLettersArray(contactsArray) {
 }
 
 /**
- * Retrieves an array of contact objects from a given object of contact results.
+ * Sorts the contacts array alphabetically.
  * 
- * @param {Object} contactResults - The object containing contact results.
- * @returns {Array<Object>} An array of contact objects.
+ * @param {Array<Object>} contacts - The array of contact objects.
+ * @returns {Array<Object>} The sorted array of contact objects.
  */
-function getContactsArray(contactResults) {
-    contacts = [];
-    Object.keys(contactResults).forEach(key => {
-        contacts.push({
-            id: contactResults[key].id,
-            name: contactResults[key].name,
-            email: contactResults[key].email,
-            phone: contactResults[key].phone,
-            color: contactResults[key].color
-        });
-    });
+function sortContactsArray(contacts) {
     contacts.sort((a, b) => (a.name).localeCompare(b.name));
     return contacts;
 }

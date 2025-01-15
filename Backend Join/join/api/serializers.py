@@ -16,7 +16,11 @@ class SubtaskSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    subtasks = SubtaskSerializer(many=True, required=False)
+    assignedContacts = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Contact.objects.all()
+    )
+    subtasks = SubtaskSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = Task

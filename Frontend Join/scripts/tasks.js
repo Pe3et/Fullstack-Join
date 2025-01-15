@@ -13,6 +13,7 @@ let newTask = {
     subtasks: [],
     status: "toDo"
 };
+let contactsArray = []
 
 /**
  * Initializes the add task form by rendering the contacts dropdown and setting up event listeners for dropdowns.
@@ -31,7 +32,7 @@ async function renderContactsDropdown() {
     dropdownRef.innerHTML = "";
     const contactResults = await getFromDB("contacts");
     if(contactResults) {
-        contactsArray = getContactsArray(contactResults);
+        contactsArray = sortContactsArray(contactResults);
         contactsArray.forEach(contact => dropdownRef.innerHTML += getContactDropdownTemplate(contact));
     }
 }
@@ -78,10 +79,10 @@ function assignContact(contact) {
     idElement.classList.toggle("activeDropdownContact");
     if(idElement.classList.contains("activeDropdownContact")){
         svgElement.innerHTML = getCheckboxSVG("checked");  
-        !newTask.assignedContacts.some(c => c.id == contact.id) && newTask.assignedContacts.push(contact);
+        !newTask.assignedContacts.includes(contact.id) && newTask.assignedContacts.push(contact.id);
     } else {
         svgElement.innerHTML = getCheckboxSVG("unchecked");
-        newTask.assignedContacts = newTask.assignedContacts.filter(item => item.id != contact.id);
+        newTask.assignedContacts = newTask.assignedContacts.filter(pk => pk != contact.id);
     }
     renderAssignedContactsIconRow()
 }
@@ -92,7 +93,8 @@ function assignContact(contact) {
 function renderAssignedContactsIconRow() {
     const rowRef = document.getElementById("assignedContactsIconRow");
     rowRef.innerHTML = "";
-    newTask.assignedContacts.forEach(contact => {
+    newTask.assignedContacts.forEach(id => {
+        const contact = contactsArray.find(contact => contact.id == id);
         rowRef.innerHTML += `<div class="contactIcon" style='background: ${contact.color}'><p>${contact.name[0]}${contact.name.split(" ")[1][0]}</p></div>`
     });
 }
@@ -220,7 +222,7 @@ async function createTask() {
         newTask.description = document.getElementById("descriptionInput").value;
         newTask.dueDate = document.getElementById("dateInput").value;
         await postToDB(newTask,"tasks/");
-        taskCreatedSuccess();
+        // taskCreatedSuccess();
     }
 }
 
