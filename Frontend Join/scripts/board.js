@@ -21,7 +21,7 @@ async function initBoard() {
  * @async
  */
 async function getTasksFromDB() {
-    let fetchResult = await getFromDB("tasks");
+    let fetchResult = await getFromDB("tasks/");
     if(fetchResult) {
         Object.keys(fetchResult).forEach(key => {
             tasks.push({
