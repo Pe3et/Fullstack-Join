@@ -222,7 +222,7 @@ async function createTask() {
         newTask.description = document.getElementById("descriptionInput").value;
         newTask.dueDate = document.getElementById("dateInput").value;
         await postToDB(newTask,"tasks/");
-        // taskCreatedSuccess();
+        taskCreatedSuccess();
     }
 }
 
