@@ -218,7 +218,7 @@ function toggleSubtaskCheck(taskID, subtaskIndex) {
         checkBoxRef.innerHTML = getSubtaskCheckboxSVG("unchecked")
     }
     task.subtasks[subtaskIndex].status = subtaskStatus;
-    putToDB(subtaskStatus, `tasks/${task.id}/subtasks/${subtaskIndex}/status`);
+    putToDB(task.subtasks[subtaskIndex], `subtasks/${task.subtasks[subtaskIndex].id}/`);
     renderOverlaySubtasks(task);
     calculateProgressBar(task);
 }
@@ -230,7 +230,7 @@ function toggleSubtaskCheck(taskID, subtaskIndex) {
  * @param {string} key - The ID of the task to delete.
  */
 async function deleteTask(key) {
-    await deleteFromDB("tasks/" + key);
+    await deleteFromDB("tasks/" + key + "/");
     tasks = tasks.filter(task => task.id != key);
     closeBoardOverlay();
     reloadBoard();
@@ -320,7 +320,7 @@ async function saveEditTask(key) {
         newTask.dueDate = document.getElementById("dateInput").value;
         newTask.category = tasks.find(t => t.id == key).category;
         newTask.status = tasks.find(t => t.id == key).status;
-        await putToDB(newTask, `tasks/${key}`);
+        await putToDB(newTask, `tasks/${key}/`);
         tasks = [];
         await initBoard();
         reloadBoard();
