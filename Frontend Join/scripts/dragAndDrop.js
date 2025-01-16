@@ -51,14 +51,14 @@ function removeDragRotate(element) {
  */ 
 function drop(ev) {
     ev.preventDefault();
-    const taskID = ev.dataTransfer.getData("text");
+    const taskID = ev.dataTransfer.getData("text").replace('boardCard', '');
     const taskIndex = tasks.findIndex(t => t.id == taskID);
     const newStatusRef = ev.target.closest(".taskList");
     const newStatus = newStatusRef.id.slice(0, -9);
-    newStatusRef.append(document.getElementById(taskID));
+    newStatusRef.append(document.getElementById('boardCard' + taskID));
     newStatusRef.classList.remove("dragHighlight");
-    document.getElementById(taskID).classList.remove("dragRotate");
+    document.getElementById('boardCard' + taskID).classList.remove("dragRotate");
     tasks[taskIndex].status = newStatus;
-    putToDB(newStatus, `tasks/${taskID}/status`);
+    putToDB(tasks[taskIndex], `tasks/${taskID}/`);
     checkNoTaskDisplayNone(tasks);
 }
