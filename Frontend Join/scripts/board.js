@@ -23,19 +23,7 @@ async function initBoard() {
 async function getTasksFromDB() {
     let fetchResult = await getFromDB("tasks/");
     if(fetchResult) {
-        Object.keys(fetchResult).forEach(key => {
-            tasks.push({
-                id: key,
-                assignedContacts: fetchResult[key].assignedContacts ?? [],
-                category: fetchResult[key].category,
-                description: fetchResult[key].description,
-                dueDate: fetchResult[key].dueDate,
-                prio: fetchResult[key].prio,
-                subtasks: fetchResult[key].subtasks ?? [],
-                title: fetchResult[key].title,
-                status: fetchResult[key].status
-            })
-        });
+        tasks = fetchResult;
     }
 }
 
@@ -296,7 +284,7 @@ async function renderEditTask(taskID) {
     containerRef.innerHTML = getOverlayEditTaskCard(task);
     setActivePrio(task.prio);
     await renderContactsDropdown();
-    newTask.assignedContacts = task.assignedContacts;
+    task.assignedContacts.forEach(contact => newTask.assignedContacts.push(contact.id))
     task.assignedContacts.forEach(contact => assignContact(contact));
     document.getElementById("boardCardOverlay").addEventListener("click", (event) => closeDropdownCheck(event.target, "assignedToDropdown"));
     renderSubtaskList(task.subtasks);

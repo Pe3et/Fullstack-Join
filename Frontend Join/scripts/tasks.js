@@ -30,7 +30,7 @@ async function initAddTaskForm() {
 async function renderContactsDropdown() {
     const dropdownRef = document.getElementById("assignedToDropdown");
     dropdownRef.innerHTML = "";
-    const contactResults = await getFromDB("contacts");
+    const contactResults = await getFromDB("contacts/");
     if(contactResults) {
         contactsArray = sortContactsArray(contactResults);
         contactsArray.forEach(contact => dropdownRef.innerHTML += getContactDropdownTemplate(contact));

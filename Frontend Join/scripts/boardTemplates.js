@@ -6,7 +6,7 @@
  */
 function getTaskCardTemplate(task) {
     return `
-        <div id="${task.id}" class="boardTask" onclick='openBoardOverlay(); renderOverlayTaskCard("${task.id}")' draggable="true" ondragstart="drag(event)" ondragend="removeDragRotate(this)">
+        <div id="boardCard${task.id}" class="boardTask" onclick='openBoardOverlay(); renderOverlayTaskCard("${task.id}")' draggable="true" ondragstart="drag(event)" ondragend="removeDragRotate(this)">
             <div class="taskCategoryArea">
               <div class="taskCategory" style="background:${categoryColors[task.category]}">
                 <p>${task.category}</p>

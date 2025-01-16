@@ -39,7 +39,29 @@ class TaskViewSet(viewsets.ModelViewSet):
             contact_serializer = ContactSerializer(contacts, many=True)
             task['assignedContacts'] = contact_serializer.data
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        subtasks_data = request.data.get('subtasks', [])
+        for subtask_data in subtasks_data:
+            if 'id' not in subtask_data:
+                subtask_data['task'] = instance.id
+                subtask_serializer = SubtaskSerializer(data=subtask_data)
+                if subtask_serializer.is_valid():
+                    subtask_serializer.save()
+            else:
+                subtask = Subtask.objects.get(id=subtask_data['id'])
+                subtask_serializer = SubtaskSerializer(subtask, data=subtask_data, partial=True)
+                if subtask_serializer.is_valid():
+                    subtask_serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class SubtaskViewSet(viewsets.ModelViewSet):
