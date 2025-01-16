@@ -287,7 +287,6 @@ async function renderEditTask(taskID) {
     newTask.assignedContacts = []
     task.assignedContacts.forEach(contact => newTask.assignedContacts.push(contact.id))
     task.assignedContacts.forEach(contact => assignContact(contact));
-    console.log(newTask.assignedContacts);
     document.getElementById("boardCardOverlay").addEventListener("click", (event) => closeDropdownCheck(event.target, "assignedToDropdown"));
     renderSubtaskList(task.subtasks);
     newTask.subtasks = task.subtasks;
