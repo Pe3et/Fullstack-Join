@@ -45,7 +45,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
@@ -60,7 +60,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         for existing_subtask in existing_subtasks_queryset:
             if existing_subtask.id not in new_subtasks_ids:
                 existing_subtask.delete()
-                
+
         # add new subtasks or edit existing subtasks
         for new_subtask_data in new_subtasks_data:
             if 'id' not in new_subtask_data:

@@ -59,6 +59,6 @@ function drop(ev) {
     newStatusRef.classList.remove("dragHighlight");
     document.getElementById('boardCard' + taskID).classList.remove("dragRotate");
     tasks[taskIndex].status = newStatus;
-    putToDB(tasks[taskIndex], `tasks/${taskID}/`);
+    putToDB({"status": newStatus}, `tasks/${taskID}/`);
     checkNoTaskDisplayNone(tasks);
 }
