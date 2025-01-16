@@ -244,7 +244,7 @@ function reloadBoard(searchReload = false) {
  * 
  * @returns {void}
  */
-async function renderOverlayAddTaskCard() {
+async function renderOverlayAddTaskCard(taskStatus="toDo") {
     const containerRef = document.getElementById('boardCardOverlay');
     containerRef.innerHTML = getOverlayAddTaskCard();
     containerRef.style.width = "auto";
@@ -252,6 +252,7 @@ async function renderOverlayAddTaskCard() {
     document.getElementById("boardCardOverlay").addEventListener("click", (event) => closeDropdownCheck(event.target, "assignedToDropdown"));
     document.getElementById("boardCardOverlay").addEventListener("click", (event) => closeDropdownCheck(event.target, "categoryDropdown"))
     resetTaskJSON();
+    newTask.status = taskStatus
 }
 
 /**

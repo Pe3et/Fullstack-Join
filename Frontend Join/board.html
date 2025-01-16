@@ -103,13 +103,14 @@
             <div class="tasksColumn">
               <div class="taskState">
                 <p>In progress</p>
-                <svg onclick="openBoardOverlay(); renderOverlayAddTaskCard()" id="inProgressPlusButton"
-                  class="plusButton" width="24" height="25" viewBox="0 0 24 25" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <rect x="1" y="1.5" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2" />
-                  <path d="M12 8.5V16.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                  <path d="M16 12.5754L8 12.5754" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                </svg>
+                <div onclick="openBoardOverlay(); renderOverlayAddTaskCard('inProgress')">
+                  <svg id="inProgressPlusButton" class="plusButton" width="24" height="25" viewBox="0 0 24 25"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1" y="1.5" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2" />
+                    <path d="M12 8.5V16.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                    <path d="M16 12.5754L8 12.5754" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
               </div>
               <div id="inProgressContainer" class="taskList" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <div id="inProgressNoTasks" class="noTask">
@@ -122,13 +123,14 @@
             <div class="tasksColumn">
               <div class="taskState">
                 <p>Await feedback</p>
-                <svg onclick="openBoardOverlay(); renderOverlayAddTaskCard()" id="awaitFeedbackPlusButton"
-                  class="plusButton" width="24" height="25" viewBox="0 0 24 25" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <rect x="1" y="1.5" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2" />
-                  <path d="M12 8.5V16.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                  <path d="M16 12.5754L8 12.5754" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                </svg>
+                <div onclick="openBoardOverlay(); renderOverlayAddTaskCard('awaitFeedback')">
+                  <svg id="awaitFeedbackPlusButton" class="plusButton" width="24" height="25" viewBox="0 0 24 25"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1" y="1.5" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2" />
+                    <path d="M12 8.5V16.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                    <path d="M16 12.5754L8 12.5754" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
               </div>
               <div id="awaitFeedbackContainer" class="taskList" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <div id="awaitFeedbackNoTasks" class="noTask">
