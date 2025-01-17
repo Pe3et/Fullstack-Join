@@ -65,17 +65,3 @@ async function renderStats() {
     summaryStats = await getFromDB('summary/')
     Object.entries(summaryStats).forEach(stat => document.getElementById(stat[0]).innerText = stat[1])
 }
-
-/**
- * Renders the urgent task statistic, including the number of urgent tasks and the due date of the earliest urgent task.
- */
-function renderUrgentStat() {
-    const urgentCount = tasks.filter( task => task.prio == 'urgent').length;
-    document.getElementById('urgentSummary').innerText = urgentCount;
-    tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-    if (tasks[0]) {
-        document.getElementById('urgentDate').innerText = tasks[0].dueDate;
-    } else {
-        document.getElementById('urgentDate').innerText = '-';
-    }
-}
