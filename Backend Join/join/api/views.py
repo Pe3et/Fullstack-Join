@@ -1,4 +1,3 @@
-from typing import Type
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
@@ -20,15 +19,15 @@ class TaskViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         task = serializer.save()
+        self.create_subtasks(task, request.data.get('subtasks', []))
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        subtasks_data = request.data.get('subtasks', [])
+    def create_subtasks(self, task, subtasks_data):
         for subtask_data in subtasks_data:
             subtask_data['task'] = task.id
             subtask_serializer = SubtaskSerializer(data=subtask_data)
             if subtask_serializer.is_valid():
                 subtask_serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
     def list(self, request, *args, **kwargs):
