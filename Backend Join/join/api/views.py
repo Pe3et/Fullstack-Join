@@ -33,15 +33,15 @@ class TaskViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
-        tasks_data = serializer.data
+        self.get_contacts_data(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def get_contacts_data(self, tasks_data):
         for task in tasks_data:
             contact_ids = task.get('assignedContacts', [])
             contacts = Contact.objects.filter(id__in=contact_ids)
             contact_serializer = ContactSerializer(contacts, many=True)
             task['assignedContacts'] = contact_serializer.data
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def update(self, request, *args, **kwargs):
