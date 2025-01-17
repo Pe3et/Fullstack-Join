@@ -15,6 +15,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -29,6 +30,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
@@ -42,17 +44,26 @@ class TaskViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
     def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
+        instance = self.update_task(request, *args, **kwargs)
+        new_subtasks_data = request.data.get('subtasks', [])
+        self.handle_subtasks(instance, new_subtasks_data)
+        return Response(self.get_serializer(instance).data, status=status.HTTP_200_OK)
+    
+    def update_task(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
+        return instance
 
-        new_subtasks_data = request.data.get('subtasks', [])
-
-        # check for subtasks to delete
-        existing_subtasks_queryset = instance.subtasks.all()
+    def handle_subtasks(self, task, new_subtasks_data):
+        self.delete_removed_subtasks(task, new_subtasks_data)
+        self.update_or_create_subtasks(task, new_subtasks_data)
+    
+    def delete_removed_subtasks(self, task, new_subtasks_data):
+        existing_subtasks_queryset = task.subtasks.all()
         new_subtasks_ids = []
         for subtask_data in new_subtasks_data:
             if 'id' in subtask_data:
@@ -61,10 +72,10 @@ class TaskViewSet(viewsets.ModelViewSet):
             if existing_subtask.id not in new_subtasks_ids:
                 existing_subtask.delete()
 
-        # add new subtasks or edit existing subtasks
+    def update_or_create_subtasks(self, task, new_subtasks_data):
         for new_subtask_data in new_subtasks_data:
             if 'id' not in new_subtask_data:
-                new_subtask_data['task'] = instance.id
+                new_subtask_data['task'] = task.id
                 subtask_serializer = SubtaskSerializer(data=new_subtask_data)
                 if subtask_serializer.is_valid():
                     subtask_serializer.save()
@@ -73,8 +84,6 @@ class TaskViewSet(viewsets.ModelViewSet):
                 subtask_serializer = SubtaskSerializer(subtask, data=new_subtask_data)
                 if subtask_serializer.is_valid():
                     subtask_serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class SubtaskViewSet(viewsets.ModelViewSet):
