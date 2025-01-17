@@ -63,7 +63,6 @@ function greetUser() {
  */
 async function renderStats() {
     summaryStats = await getFromDB('summary/')
-    console.log();
     Object.entries(summaryStats).forEach(stat => document.getElementById(stat[0]).innerText = stat[1])
 }
 
