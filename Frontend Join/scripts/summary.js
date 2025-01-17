@@ -5,7 +5,7 @@
 function initSummary() {
     greeting();
     document.querySelectorAll('.summaryCard').forEach( sc => sc.addEventListener('click', () => location.href = './board.html'));
-    getStats();
+    renderStats();
 }
 
 /**
@@ -59,30 +59,12 @@ function greetUser() {
 }
 
 /**
- * Retrieves and displays task statistics, including the number of tasks in each status category and the number of urgent tasks.
- * The statistics are displayed in the corresponding summary elements on the page.
+ * Get's the summary stats from backend and renders each of them.
  */
-async function getStats() {
+async function renderStats() {
     summaryStats = await getFromDB('summary/')
-    console.log(summaryStats);
-    const category = ['toDo', 'done', 'inProgress', 'awaitFeedback']
-    category.forEach( cat => renderStatusStat(cat));
-    renderUrgentStat();
-    if(tasks[0]) {
-        document.getElementById('totalTasksSummary').innerText = tasks.length;
-    } else {
-        document.getElementById('totalTasksSummary').innerText = '0'
-    }
-}
-
-/**
- * Renders the status statistic for a given task status category.
- * 
- * @param {string} stat - The task status category (e.g., 'toDo', 'done', 'inProgress', 'awaitFeedback').
- */
-function renderStatusStat(stat='') {
-    const statCount = tasks.filter( task => task.status == stat).length;
-    document.getElementById(stat + 'Summary').innerText = statCount;
+    console.log();
+    Object.entries(summaryStats).forEach(stat => document.getElementById(stat[0]).innerText = stat[1])
 }
 
 /**

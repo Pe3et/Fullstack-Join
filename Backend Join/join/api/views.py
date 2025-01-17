@@ -94,15 +94,14 @@ class SubtaskViewSet(viewsets.ModelViewSet):
 def get_summary_stats(request):
     tasks = Task.objects.all()
     summary_stats = {}
-    summary_stats['totalAmount'] = tasks.count()
+    summary_stats['totalTasks'] = tasks.count()
     summary_stats['toDoAmount'] = tasks.filter(status='todo').count()
     summary_stats['inProgressAmount'] = tasks.filter(status='inProgress').count()
     summary_stats['awaitFeedbackAmount'] = tasks.filter(status='awaitFeedback').count()
     summary_stats['doneAmount'] = tasks.filter(status='done').count()
     summary_stats['urgentAmount'] = tasks.filter(prio='urgent').count()
-    summary_stats['urgentDueDate'] = get_nearest_urgent_due_date(tasks.filter(prio='urgent'))
+    summary_stats['urgentDate'] = get_nearest_urgent_due_date(tasks.filter(prio='urgent'))
     return JsonResponse(summary_stats)
-
 
 def get_nearest_urgent_due_date(urgent_tasks):
     if urgent_tasks.exists():
