@@ -23,8 +23,6 @@ function greeting() {
 /**
  * Displays a greeting to the user based on the current time of day.
  * The greeting is displayed in the #greetingText element.
- * 
- * @returns {void}
  */
 function daytimeGreeting() {
     let timeOfDay = new Date();
@@ -45,8 +43,6 @@ function daytimeGreeting() {
 
 /**
  * Appends an exclamation mark to the greeting text, indicating a guest user.
- * 
- * @returns {void}
  */
 function greetGuest() {
     const greetingTextRef = document.getElementById('greetingText');
@@ -55,8 +51,6 @@ function greetGuest() {
 
 /**
  * Displays a personalized greeting to the user, appending a comma to the daytime greeting and displaying the user's name.
- * 
- * @returns {void}
  */
 function greetUser() {
     const greetingTextRef = document.getElementById('greetingText');
@@ -67,12 +61,10 @@ function greetUser() {
 /**
  * Retrieves and displays task statistics, including the number of tasks in each status category and the number of urgent tasks.
  * The statistics are displayed in the corresponding summary elements on the page.
- * 
- * @async
- * @returns {void}
  */
 async function getStats() {
-    await getTasksFromDB();
+    summaryStats = await getFromDB('summary/')
+    console.log(summaryStats);
     const category = ['toDo', 'done', 'inProgress', 'awaitFeedback']
     category.forEach( cat => renderStatusStat(cat));
     renderUrgentStat();
@@ -87,7 +79,6 @@ async function getStats() {
  * Renders the status statistic for a given task status category.
  * 
  * @param {string} stat - The task status category (e.g., 'toDo', 'done', 'inProgress', 'awaitFeedback').
- * @returns {void}
  */
 function renderStatusStat(stat='') {
     const statCount = tasks.filter( task => task.status == stat).length;
@@ -96,8 +87,6 @@ function renderStatusStat(stat='') {
 
 /**
  * Renders the urgent task statistic, including the number of urgent tasks and the due date of the earliest urgent task.
- * 
- * @returns {void}
  */
 function renderUrgentStat() {
     const urgentCount = tasks.filter( task => task.prio == 'urgent').length;

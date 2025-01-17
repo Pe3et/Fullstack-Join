@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
@@ -88,3 +89,27 @@ class TaskViewSet(viewsets.ModelViewSet):
 class SubtaskViewSet(viewsets.ModelViewSet):
     queryset = Subtask.objects.all()
     serializer_class = SubtaskSerializer
+
+
+def get_summary_stats(request):
+    tasks = Task.objects.all()
+    summary_stats = {}
+    summary_stats['totalAmount'] = tasks.count()
+    summary_stats['toDoAmount'] = tasks.filter(status='todo').count()
+    summary_stats['inProgressAmount'] = tasks.filter(status='inProgress').count()
+    summary_stats['awaitFeedbackAmount'] = tasks.filter(status='awaitFeedback').count()
+    summary_stats['doneAmount'] = tasks.filter(status='done').count()
+    summary_stats['urgentAmount'] = tasks.filter(prio='urgent').count()
+    summary_stats['urgentDueDate'] = get_nearest_urgent_due_date(tasks.filter(prio='urgent'))
+    return JsonResponse(summary_stats)
+
+
+def get_nearest_urgent_due_date(urgent_tasks):
+    if urgent_tasks.exists():
+        urgent_due_dates = [task.dueDate for task in urgent_tasks if task.dueDate]
+        urgent_due_dates.sort()
+        return urgent_due_dates[0] if urgent_due_dates else '-'
+    else:
+        return '-'
+
+
