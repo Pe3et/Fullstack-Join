@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from join.api.serializers import ContactSerializer, TaskSerializer, SubtaskSerializer
 from join.models import Contact, Task, Subtask
 
+from . import functions
+
 
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
@@ -100,15 +102,5 @@ def get_summary_stats(request):
     summary_stats['awaitFeedbackAmount'] = tasks.filter(status='awaitFeedback').count()
     summary_stats['doneAmount'] = tasks.filter(status='done').count()
     summary_stats['urgentAmount'] = tasks.filter(prio='urgent').count()
-    summary_stats['urgentDate'] = get_nearest_urgent_due_date(tasks.filter(prio='urgent'))
+    summary_stats['urgentDate'] = functions.get_nearest_urgent_due_date(tasks.filter(prio='urgent'))
     return JsonResponse(summary_stats)
-
-def get_nearest_urgent_due_date(urgent_tasks):
-    if urgent_tasks.exists():
-        urgent_due_dates = [task.dueDate for task in urgent_tasks if task.dueDate]
-        urgent_due_dates.sort()
-        return urgent_due_dates[0] if urgent_due_dates else '-'
-    else:
-        return '-'
-
-
