@@ -20,7 +20,7 @@ class RegistrationView(APIView):
             token, created = Token.objects.get_or_create(user=saved_account)
             data = {
                 'token': token.key,
-                'username': saved_account.username,
+                'full_name': saved_account.first_name + " " + saved_account.last_name,
             }
         else:
             data = serializer.errors
@@ -50,7 +50,7 @@ class LoginView(ObtainAuthToken):
             response_data = {
                 'token': token.key,
                 'email': email,
-                'username': user.username,
+                'full_name': user.first_name + " " + user.last_name,
             }
         else:
             response_data = serializer.errors

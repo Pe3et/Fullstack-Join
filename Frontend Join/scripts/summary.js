@@ -55,7 +55,7 @@ function greetGuest() {
 function greetUser() {
     const greetingTextRef = document.getElementById('greetingText');
     greetingTextRef.innerText += ',';
-    document.getElementById('userName').innerText = joinStorage.userName;
+    document.getElementById('userName').innerText = joinStorage.full_name;
 }
 
 /**

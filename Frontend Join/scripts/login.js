@@ -134,7 +134,7 @@ async function checkLoginSucces() {
     let loginSucces = false;
     if (loginResult.token) {
         loginSucces = true;
-        localStoreActiveUser(loginResult.username, loginResult.token);
+        localStoreActiveUser(loginResult.full_name, loginResult.token);
         location.href = "summary.html"
     };
 
@@ -155,9 +155,9 @@ function loginError() {
  * 
  * @param {string} name The name of the active user.
  */
-function localStoreActiveUser(username, token) {
-    joinStorage.username = username;
-    joinStorage.iconInitials = `${username[0]}${username.split(" ")[1][0]}`;
+function localStoreActiveUser(full_name, token) {
+    joinStorage.full_name = full_name;
+    joinStorage.iconInitials = `${full_name[0]}${full_name.split(" ")[1][0]}`;
     joinStorage.token = token;
     localStorage.setItem('joinStorage', JSON.stringify(joinStorage));
     sessionStorage.setItem('loggedIn', JSON.stringify(true));
@@ -191,7 +191,7 @@ async function signUp() {
     newUser.phone = '';
     signUpResult = await postToDB(newUser, 'register/');
     console.log(signUpResult);
-    localStoreActiveUser(signUpResult.username, signUpResult.token);
+    localStoreActiveUser(signUpResult.full_name, signUpResult.token);
     signUpSuccessAnimationAndRedirect();
 }
 
