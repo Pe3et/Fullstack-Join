@@ -20,9 +20,9 @@ function startAnimation() {
     const logo = document.querySelector('.logo');
     const logoContainer = document.getElementById('logoContainer');
     logo.classList.add('logoEndPoint');
-    document.querySelectorAll('.logo .logoFill').forEach( e => e.style.fill = "#2A3647");
+    document.querySelectorAll('.logo .logoFill').forEach(e => e.style.fill = "#2A3647");
     logoContainer.style.background = "#2a364700";
-    setTimeout( () => logoContainer.style.height = 0, 800);
+    setTimeout(() => logoContainer.style.height = 0, 800);
 }
 
 /**
@@ -61,12 +61,12 @@ function renderSignUp() {
  * and then setting its final height and width after a short delay. The direction of the transition depends on the current container mode.
  */
 function setupContainerTransition(containerRef) {
-    let transitionDirection = { start: '', end: ''};
+    let transitionDirection = { start: '', end: '' };
     let startValue = containerMode == 'login' ? 0 : '1000px';
-    containerMode == 'login' ? transitionDirection = {start:'min', end:'max'} : transitionDirection = {start:'max', end:'min'};
+    containerMode == 'login' ? transitionDirection = { start: 'min', end: 'max' } : transitionDirection = { start: 'max', end: 'min' };
     containerRef.style[`${transitionDirection.start}Height`] = startValue;
     containerRef.style[`${transitionDirection.start}Width`] = startValue;
-    setTimeout( () => {
+    setTimeout(() => {
         containerRef.style[`${transitionDirection.end}Height`] = `${containerRef.getBoundingClientRect().height}px`;
         containerRef.style[`${transitionDirection.end}Width`] = `${containerRef.getBoundingClientRect().width}px`;
     }, 125);
@@ -122,34 +122,27 @@ function toggleRememberMe() {
 
 /**
  * Checks if the provided login credentials match any existing user in the database.
- * If a match is found, it stores the active user's name in local storage and redirects to the summary page.
+ * If a match is found, it stores the active user's auth token in local storage and redirects to the summary page.
  * If no match is found, it calls the loginError function to display an error message.
- * 
- * @async
- * @function checkLoginSucces
- * @returns {void}
  */
 async function checkLoginSucces() {
     const email = document.getElementById('emailInput').value;
     const password = document.getElementById('passwordInput').value;
-    const contactResults = await getFromDB('contacts');
+    const loginData = { 'email': email, 'password': password }
+    const loginResult = await postToDB(loginData, 'login/');
+    
     let loginSucces = false;
-    if(contactResults) {
-        Object.keys(contactResults).forEach(id => {
-            if (contactResults[id].email == email && contactResults[id].password == password) {
-                loginSucces = true;
-                localStoreActiveUser(contactResults[id].name);
-                location.href = "summary.html"
-            }
-        });
-    }
+    if (loginResult.token) {
+        loginSucces = true;
+        localStoreActiveUser(loginResult.username, loginResult.token);
+        location.href = "summary.html"
+    };
+
     (loginSucces == false) && loginError();
 }
 
 /**
  * Handles the login error by adding an error class to the email input field and appending an error message to the password input field.
- * 
- * @description This function is called when the login credentials are invalid. It adds an error class to the email input field and appends an error message to the password input field.
  */
 function loginError() {
     document.getElementById('emailInput').classList.add('inputError');
@@ -161,13 +154,11 @@ function loginError() {
  * Stores the active user's name in local storage and updates the joinStorage object.
  * 
  * @param {string} name The name of the active user.
- * 
- * @description This function updates the joinStorage object with the active user's name and icon initials,
- * and stores the updated object in local storage. It also sets the 'loggedIn' status to true in session storage.
  */
-function localStoreActiveUser(name) {
-    joinStorage.userName = name;
-    joinStorage.iconInitials = `${name[0]}${name.split(" ")[1][0]}`;
+function localStoreActiveUser(username, token) {
+    joinStorage.username = username;
+    joinStorage.iconInitials = `${username[0]}${username.split(" ")[1][0]}`;
+    joinStorage.token = token;
     localStorage.setItem('joinStorage', JSON.stringify(joinStorage));
     sessionStorage.setItem('loggedIn', JSON.stringify(true));
 }
@@ -175,13 +166,10 @@ function localStoreActiveUser(name) {
 /**
  * Logs in as a guest by clearing local storage, setting the joinStorage object to a guest user,
  * and redirecting to the summary page.
- * 
- * @description This function logs in as a guest by clearing local storage, setting the joinStorage object to a guest user,
- * and redirecting to the summary page. The guest user is identified by the icon initials 'G' and has remember me set to false.
  */
 function loginGuest() {
     localStorage.clear();
-    joinStorage = {iconInitials: 'G', rememberMe: false};
+    joinStorage = { iconInitials: 'G', rememberMe: false };
     localStorage.setItem('joinStorage', JSON.stringify(joinStorage));
     sessionStorage.setItem('loggedIn', JSON.stringify(true));
     location.href = 'summary.html'
@@ -189,10 +177,6 @@ function loginGuest() {
 
 /**
  * Handles the sign up process by creating a new user object, posting it to the database, and storing the active user's name in local storage.
- * 
- * @async
- * @function signUp
- * @returns {void}
  */
 async function signUp() {
     const newUser = {};
@@ -208,28 +192,17 @@ async function signUp() {
 
 /**
  * Handles the sign up success animation and redirects to the summary page.
- * 
- * @description This function removes the animation start point class from the sign up success element,
- * removes the hidden class from the sign up success background element, and removes the animation background color class.
- * It then redirects to the summary page after a delay of 1000ms.
- * 
- * @returns {void}
  */
 function signUpSuccessAnimationAndRedirect() {
     document.querySelector('.signUpSuccess').classList.remove('signupSuccessAnimationStartpoint');
     document.querySelector('.signUpSuccessBackground').classList.remove('hidden');
     document.querySelector('.signUpSuccessBackground').classList.remove('animationBackgroundColor');
-    setTimeout(()=>{location.href = 'summary.html'}, 1000)
+    setTimeout(() => { location.href = 'summary.html' }, 1000)
 }
 
 /**
  * Toggles the policy acceptance status by updating the policyAccepted variable and adding or removing an event listener to the checkbox element.
  * If the policy is accepted, it calls the validateSignUpInput function to validate the sign up input fields.
- * 
- * @description This function is called when the policy acceptance checkbox is clicked. It updates the policyAccepted variable and adds or removes an event listener to the checkbox element.
- * If the policy is accepted, it calls the validateSignUpInput function to validate the sign up input fields.
- * 
- * @returns {void}
  */
 function togglePolicyAccept() {
     const checkbox = document.getElementById('checkbox');
@@ -242,17 +215,12 @@ function togglePolicyAccept() {
  * Validates the sign up input fields by checking the name, email, and confirmed password.
  * If all fields are valid and the policy is accepted, it enables the sign up button.
  * Otherwise, it disables the sign up button, toggles the policy acceptance, and unchecks the checkbox.
- * 
- * @description This function is called when the policy acceptance checkbox is clicked or when the sign up input fields are updated.
- * It validates the sign up input fields and updates the sign up button accordingly.
- * 
- * @returns {void}
  */
 function validateSignUpInput() {
     validateName(document.getElementById('nameInput'));
     validateEmail(document.getElementById('emailInput'));
     validateConfirmedPassword(document.getElementById('confirmPasswordInput'));
-    if(validated.name == true && validated.email == true && validated.password == true && policyAccepted) {
+    if (validated.name == true && validated.email == true && validated.password == true && policyAccepted) {
         enableSignUpButton();
     } else {
         disableSignUpButton();
@@ -263,11 +231,6 @@ function validateSignUpInput() {
 
 /**
  * Enables the sign up button by removing the 'disabledButton' class and adding an event listener to the button.
- * 
- * @description This function is called when the sign up input fields are valid and the policy is accepted.
- * It enables the sign up button, allowing the user to proceed with the sign up process.
- * 
- * @returns {void}
  */
 function enableSignUpButton() {
     const signUpButton = document.getElementById('signUpButton');
@@ -277,11 +240,6 @@ function enableSignUpButton() {
 
 /**
  * Disables the sign up button by adding the 'disabledButton' class and removing the event listener.
- * 
- * @description This function is called when the sign up input fields are invalid or the policy is not accepted.
- * It disables the sign up button, preventing the user from proceeding with the sign up process.
- * 
- * @returns {void}
  */
 function disableSignUpButton() {
     const signUpButton = document.getElementById('signUpButton');
@@ -295,7 +253,6 @@ function disableSignUpButton() {
  * If the input field is empty, it removes the visibility icon and sets the background image to a lock icon.
  * 
  * @param {HTMLElement} passwordInputRef The password input field element.
- * @returns {void}
  */
 function getPasswordVisibilityIcon(passwordInputRef) {
     if (passwordInputRef.value) {
@@ -330,7 +287,6 @@ function createVisibilityIcon(isPasswordVisible = false) {
  * It also updates the visibility icon accordingly.
  * 
  * @param {HTMLElement} svgRef The reference to the visibility icon element.
- * @returns {void}
  */
 function togglePasswordVisibility(svgRef) {
     const passwordWrapperRef = svgRef.closest('.passwordWrapper');

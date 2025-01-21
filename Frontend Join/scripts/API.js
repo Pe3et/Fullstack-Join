@@ -1,13 +1,11 @@
-const BASE_URL = "http://127.0.0.1:8000/";
+const BASE_URL = "http://127.0.0.1:8000/api/";
 
 /**
  * Retrieves data from the Database.
  * 
- * @async
  * @param {string} [path=""] - The path to the data in the database.
- * @returns {Promise<object>} The data retrieved from the database.
  */
-async function getFromDB(path="") {
+async function getFromDB(path = "") {
     const fetchdata = await fetch(BASE_URL + path);
     const result = await fetchdata.json();
     return result
@@ -16,30 +14,28 @@ async function getFromDB(path="") {
 /**
  * Posts data to the Database.
  * 
- * @async
  * @param {object} postData - The data to be posted to the database.
  * @param {string} [path=""] - The path to the data in the database.
- * @returns {Promise<void>}
  */
-async function postToDB(postData, path="") {
-    await fetch(BASE_URL + path, {
+async function postToDB(postData, path = "") {
+    const fetchdata = await fetch(BASE_URL + path, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(postData)
     });
+    const result = await fetchdata.json();
+    return result
 }
 
 /**
  * Updates data in the  Database.
  * 
- * @async
  * @param {object} putData - The data to be updated in the database.
  * @param {string} [path=""] - The path to the data in the database.
- * @returns {Promise<void>}
  */
-async function putToDB(putData, path="") {
+async function putToDB(putData, path = "") {
     await fetch(BASE_URL + path, {
         method: "PUT",
         headers: {
@@ -52,12 +48,10 @@ async function putToDB(putData, path="") {
 /**
  * Deletes data from the Database.
  * 
- * @async
  * @param {string} [path=""] - The path to the data in the database.
- * @returns {Promise<void>}
  */
-async function deleteFromDB(path="") {
+async function deleteFromDB(path = "") {
     await fetch(BASE_URL + path, {
         method: "DELETE",
-    }) 
+    })
 }
