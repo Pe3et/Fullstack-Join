@@ -130,7 +130,7 @@ async function checkLoginSucces() {
     const password = document.getElementById('passwordInput').value;
     const loginData = { 'email': email, 'password': password }
     const loginResult = await postToDB(loginData, 'login/');
-    
+
     let loginSucces = false;
     if (loginResult.token) {
         loginSucces = true;
@@ -180,13 +180,18 @@ function loginGuest() {
  */
 async function signUp() {
     const newUser = {};
-    newUser.name = getUpperCaseName(document.getElementById('nameInput').value);
+    const full_name = getUpperCaseName(document.getElementById('nameInput').value);
+    newUser.first_name = full_name.split(' ')[0];
+    newUser.last_name = full_name.split(' ')[1];
+    newUser.username = newUser.first_name;
     newUser.email = document.getElementById('emailInput').value;
-    newUser.password = document.getElementById('confirmPasswordInput').value;
+    newUser.password = document.getElementById('passwordInput').value;
+    newUser.repeated_password = document.getElementById('confirmPasswordInput').value;
     newUser.color = getRandomColor();
     newUser.phone = '';
-    await postToDB(newUser, 'contacts');
-    localStoreActiveUser(newUser.name);
+    signUpResult = await postToDB(newUser, 'register/');
+    console.log(signUpResult);
+    localStoreActiveUser(signUpResult.username, signUpResult.token);
     signUpSuccessAnimationAndRedirect();
 }
 

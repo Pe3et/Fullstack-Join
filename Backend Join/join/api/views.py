@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from rest_framework import status, viewsets
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from join.api.serializers import ContactSerializer, TaskSerializer, SubtaskSerializer
@@ -93,6 +94,7 @@ class SubtaskViewSet(viewsets.ModelViewSet):
     serializer_class = SubtaskSerializer
 
 
+@api_view(['GET'])
 def get_summary_stats(request):
     tasks = Task.objects.all()
     summary_stats = {}

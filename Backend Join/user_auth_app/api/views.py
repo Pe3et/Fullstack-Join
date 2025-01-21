@@ -20,7 +20,6 @@ class RegistrationView(APIView):
             token, created = Token.objects.get_or_create(user=saved_account)
             data = {
                 'token': token.key,
-                'email': saved_account.email,
                 'username': saved_account.username,
             }
         else:

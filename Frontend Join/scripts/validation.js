@@ -24,9 +24,8 @@ function validateName(inputRef, errorContainer = inputRef) {
 }
 
 /**
- * Converts a name to uppercase.
+ * Converts a full name to uppercase.
  * @param {string} [nameInput=""] - The name to convert.
- * @returns {string} The name in uppercase.
  */
 function getUpperCaseName(nameInput="") {
     let splitName = nameInput.trim().split(' ');
