@@ -42,16 +42,17 @@ class LoginView(ObtainAuthToken):
             'username': user.username,
             'password': request.data.get('password')
         }
-        self.authenticate(data_to_serialize, user)
+        response_data = self.authenticate(data_to_serialize, user)
+        return Response(response_data)
 
     def authenticate(self, data_to_serialize, user):
         serializer = self.serializer_class(data=data_to_serialize)
         if serializer.is_valid():
             token, created = Token.objects.get_or_create(user=user)
-            return Response({
+            return {
                 'token': token.key,
                 'email': serializer.validated_data['user'].email,
                 'full_name': user.first_name + " " + user.last_name,
-            })
+            }
         else:
-            return Response(serializer.errors)
+            return serializer.errors
