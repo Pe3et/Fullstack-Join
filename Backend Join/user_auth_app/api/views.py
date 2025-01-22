@@ -1,4 +1,3 @@
-
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -27,6 +26,7 @@ class RegistrationView(APIView):
 
         return Response(data)
     
+
 class LoginView(ObtainAuthToken):
     permission_classes = [AllowAny]
 
@@ -36,23 +36,22 @@ class LoginView(ObtainAuthToken):
             user = User.objects.get(email=entered_email) 
         except:
             return Response({'error': 'User not found.'})
-
+        
         data_to_serialize = {
-            'email': entered_email,
+            'email': user.email,
             'username': user.username,
             'password': request.data.get('password')
         }
-        serializer = self.serializer_class(data=data_to_serialize)
-        response_data = {}
-        if serializer.is_valid():
-            email = serializer.validated_data['user'].email
-            token, created = Token.objects.get_or_create(user=user)
-            response_data = {
-                'token': token.key,
-                'email': email,
-                'full_name': user.first_name + " " + user.last_name,
-            }
-        else:
-            response_data = serializer.errors
+        self.authenticate(data_to_serialize, user)
 
-        return Response(response_data)
+    def authenticate(self, data_to_serialize, user):
+        serializer = self.serializer_class(data=data_to_serialize)
+        if serializer.is_valid():
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'email': serializer.validated_data['user'].email,
+                'full_name': user.first_name + " " + user.last_name,
+            })
+        else:
+            return Response(serializer.errors)

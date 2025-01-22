@@ -11,7 +11,8 @@ class RegistartionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'repeated_password', 'first_name', 'last_name']
+        fields = ['username', 'email', 'password',
+                  'repeated_password', 'first_name', 'last_name']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -21,8 +22,9 @@ class RegistartionSerializer(serializers.ModelSerializer):
         repeated_pw = self.validated_data['repeated_password']
 
         if pw != repeated_pw:
-            raise serializers.ValidationError({'error': 'Passwords do not match'})
-        
+            raise serializers.ValidationError(
+                {'error': 'Passwords do not match'})
+
         account = User(
             email=self.validated_data['email'],
             username=self.validated_data['username'],
@@ -30,7 +32,14 @@ class RegistartionSerializer(serializers.ModelSerializer):
             last_name=self.validated_data['last_name']
         )
         account.set_password(pw)
+        account.save()
+        self.create_account_as_contact(account)
+        return account
 
+    """
+    Creates a contact with the data of the user-account.
+    """
+    def create_account_as_contact(self, account):
         contact = Contact(
             name=f"{account.first_name} {account.last_name}",
             email=account.email,
@@ -38,5 +47,3 @@ class RegistartionSerializer(serializers.ModelSerializer):
             phone=""
         )
         contact.save()
-        account.save()
-        return account
