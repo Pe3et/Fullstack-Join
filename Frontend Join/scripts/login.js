@@ -191,7 +191,6 @@ async function signUp() {
     newUser.color = getRandomColor();
     newUser.phone = '';
     signUpResult = await postToDB(newUser, 'register/');
-    console.log(signUpResult);
     localStoreActiveUser(signUpResult.full_name, signUpResult.token);
     signUpSuccessAnimationAndRedirect();
 }

@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from join.api.functions import get_random_color
+from join.models import Contact
+
 
 class RegistartionSerializer(serializers.ModelSerializer):
 
@@ -27,5 +30,13 @@ class RegistartionSerializer(serializers.ModelSerializer):
             last_name=self.validated_data['last_name']
         )
         account.set_password(pw)
+
+        contact = Contact(
+            name=f"{account.first_name} {account.last_name}",
+            email=account.email,
+            color=get_random_color(),
+            phone=""
+        )
+        contact.save()
         account.save()
         return account
