@@ -168,8 +168,9 @@ function localStoreActiveUser(full_name, token) {
  * and redirecting to the summary page.
  */
 function loginGuest() {
+    GUEST_TOKEN = "065bfcebe189923bc154fba1f84b6f07321229b5"
     localStorage.clear();
-    joinStorage = { iconInitials: 'G', rememberMe: false };
+    joinStorage = { iconInitials: 'G', rememberMe: false, token: GUEST_TOKEN };
     localStorage.setItem('joinStorage', JSON.stringify(joinStorage));
     sessionStorage.setItem('loggedIn', JSON.stringify(true));
     location.href = 'summary.html'
