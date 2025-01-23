@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny
@@ -19,12 +20,11 @@ class RegistrationView(APIView):
             token, created = Token.objects.get_or_create(user=saved_account)
             data = {
                 'token': token.key,
-                'full_name': saved_account.first_name + " " + saved_account.last_name,
+                'full_name': saved_account.first_name + ' ' + saved_account.last_name,
             }
+            return Response(data, status=status.HTTP_201_CREATED)
         else:
-            data = serializer.errors
-
-        return Response(data)
+            return Response(serializer.errors['email'][0], status=status.HTTP_400_BAD_REQUEST)
     
 
 class LoginView(ObtainAuthToken):

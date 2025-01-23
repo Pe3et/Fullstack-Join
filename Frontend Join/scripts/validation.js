@@ -45,6 +45,7 @@ function validateEmail(inputRef, errorContainer = inputRef) {
         validated.email = true;
         removeErrorMessage(errorContainer);
     } else {
+        removeErrorMessage(errorContainer);
         validated.email = false;
         appendErrorMessage(errorContainer, 'Please enter valid email address.');
     }

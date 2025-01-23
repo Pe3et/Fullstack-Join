@@ -180,19 +180,33 @@ function loginGuest() {
  * Handles the sign up process by creating a new user object, posting it to the database, and storing the active user's name in local storage.
  */
 async function signUp() {
+    const newUser = getNewUserData()
+    const signUpResult = await postToDB(newUser, 'register/');
+    if (signUpResult !== 'Email already exists.' && validated.email == true) {
+        localStoreActiveUser(signUpResult.full_name, signUpResult.token);
+        signUpSuccessAnimationAndRedirect();
+    } else {
+        appendErrorMessage(document.getElementById('emailInput'), signUpResult)
+    }
+}
+
+/**
+ * Get's all the input data from registration and creates a user object for backend. 
+ * 
+ * @returns {Object} - data of a new user to register
+ */
+function getNewUserData() {
     const newUser = {};
     const full_name = getUpperCaseName(document.getElementById('nameInput').value);
     newUser.first_name = full_name.split(' ')[0];
     newUser.last_name = full_name.split(' ')[1];
-    newUser.username = newUser.first_name;
     newUser.email = document.getElementById('emailInput').value;
+    newUser.username = newUser.email;
     newUser.password = document.getElementById('passwordInput').value;
     newUser.repeated_password = document.getElementById('confirmPasswordInput').value;
     newUser.color = getRandomColor();
     newUser.phone = '';
-    signUpResult = await postToDB(newUser, 'register/');
-    localStoreActiveUser(signUpResult.full_name, signUpResult.token);
-    signUpSuccessAnimationAndRedirect();
+    return newUser
 }
 
 /**

@@ -17,14 +17,25 @@ class RegistartionSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
+    """
+    Checks if email already exists and raises an error if so.
+    """
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError('Email already exists.')
+        return value
+
+    """
+    Creates a user account if the given passwords are matching and
+    calls the function to create a new contact with the data of the new user.
+    """
     def save(self):
         pw = self.validated_data['password']
         repeated_pw = self.validated_data['repeated_password']
 
         if pw != repeated_pw:
-            raise serializers.ValidationError(
-                {'error': 'Passwords do not match'})
-
+            raise serializers.ValidationError('Passwords do not match')
+        
         account = User(
             email=self.validated_data['email'],
             username=self.validated_data['username'],
