@@ -78,6 +78,10 @@ Sends the token for guest login to Frontend.
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_guest_token(request):
-    guest = User.objects.get(username='Gast')
-    guest_token = Token.objects.get(user=guest)
+    if not User.objects.filter(username='Gast').exists():
+        guest = User(username='Gast')
+        guest.save()
+    else:
+        guest = User.objects.get(username='Gast')
+    guest_token, created = Token.objects.get_or_create(user=guest)
     return Response(guest_token.key, status=status.HTTP_200_OK)
