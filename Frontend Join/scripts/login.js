@@ -167,10 +167,10 @@ function localStoreActiveUser(full_name, token) {
  * Logs in as a guest by clearing local storage, setting the joinStorage object to a guest user,
  * and redirecting to the summary page.
  */
-function loginGuest() {
-    GUEST_TOKEN = "065bfcebe189923bc154fba1f84b6f07321229b5"
+async function loginGuest() {
     localStorage.clear();
-    joinStorage = { iconInitials: 'G', rememberMe: false, token: GUEST_TOKEN };
+    guestToken = await getFromDB("guest-login/")
+    joinStorage = { iconInitials: 'G', rememberMe: false, token: guestToken };
     localStorage.setItem('joinStorage', JSON.stringify(joinStorage));
     sessionStorage.setItem('loggedIn', JSON.stringify(true));
     location.href = 'summary.html'

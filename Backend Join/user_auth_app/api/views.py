@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,6 +13,10 @@ from user_auth_app.api.serializers import RegistartionSerializer
 class RegistrationView(APIView):
     permission_classes = [AllowAny]
 
+    """
+    Checks if the e-mail is already registered, serializes and creates a token for 
+    the user user.
+    """
     def post(self, request):
         serializer = RegistartionSerializer(data=request.data)
         data = {}
@@ -30,6 +35,11 @@ class RegistrationView(APIView):
 class LoginView(ObtainAuthToken):
     permission_classes = [AllowAny]
 
+    """
+    Checks if the user who tries to log in exists.
+    If the user exists, it calls the 'authenticate' method with
+    appropiate data to serialize.
+    """
     def post(self, request):
         entered_email = request.data.get('email')
         try:
@@ -45,6 +55,10 @@ class LoginView(ObtainAuthToken):
         response_data = self.authenticate(data_to_serialize, user)
         return Response(response_data)
 
+    """
+    Serializes the login data and returns appropiate data including the token
+    for Frontend response.
+    """
     def authenticate(self, data_to_serialize, user):
         serializer = self.serializer_class(data=data_to_serialize)
         if serializer.is_valid():
@@ -56,3 +70,14 @@ class LoginView(ObtainAuthToken):
             }
         else:
             return serializer.errors
+
+
+"""
+Sends the token for guest login to Frontend.
+"""        
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_guest_token(request):
+    guest = User.objects.get(username='Gast')
+    guest_token = Token.objects.get(user=guest)
+    return Response(guest_token.key, status=status.HTTP_200_OK)
